@@ -1,24 +1,58 @@
 .navbar{
-    background-color:  #375e97; 
+    background-color:  #2C3A47; 
     -webkit-box-shadow: 0 8px 6px -6px #999;
     -moz-box-shadow: 0 8px 6px -6px #999;
-    box-shadow: 0 8px 6px -6px #999;
-  margin-bottom: 1rem;
+    box-shadow: 0 8px 6px -6px rgb(80, 78, 78);
+   
 }
 .navbar-nav > li{
-    padding-left:30px;
-    padding-right:30px;  
+    padding-left:10px;
 }
  #link-col{
      color: white;
-     font-size: 20px;
+     font-size: 17px;
      border-bottom: 2px solid transparent;
  }
  #link-col:hover{
     margin: 0px;
-    border-bottom: 2px solid #ffbb00;  
+    border-bottom: 2px solid #00ff55;  
  }
-
-.des{
-    border:1px solid black;
+.container-fluid{
+    background-color:#ced2d6;
+   
 }
+
+.card{
+    width: 18rem;
+    box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
+    border-radius: 12px;
+    margin: 0 auto;
+}
+ /* ===============Timer Ui=========== */
+ ul#example {
+    list-style: none;
+    margin: 0px 0;
+    padding: 0;
+    display: block;
+    text-align: center;
+  }
+  
+  ul#example li { display: inline-block; }
+  
+  ul#example li span {
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 30px;
+  }
+  
+  ul#example li.seperator {
+    font-size: 30px;
+    line-height: 20px;
+    vertical-align: top;
+  }
+  
+  ul#example li p {
+    color: #a7abb1;
+    font-size: 20px;
+  }
+/* ===================================== */
