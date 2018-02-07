@@ -27,6 +27,10 @@
     box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
     border-radius: 12px;
     margin: 0 auto;
+    height: 27rem;
+}
+.card-img-top{
+    height: 14rem;
 }
  /* ===============Timer Ui=========== */
  ul#example {
