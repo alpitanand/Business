@@ -1,19 +1,13 @@
 const mongoose = require('mongoose');
 
 var dataschema = mongoose.Schema({
-    name:{
-        type: String,
-        min : 2,
-        required : true
-    },
-    emailId :{
-        type: String,
-        min: 3,
-        required: true
-    }
+    id:String,
+    email:String,
+    name:String
+
 })
 
-var uploads = mongoose.model('Input_Data',dataschema);
+var users = mongoose.model('Input_Data',dataschema);
 module.exports = {
-    uploads : uploads
+    users : users
 }

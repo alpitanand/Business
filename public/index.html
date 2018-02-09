@@ -17,6 +17,26 @@
 </head>
 
 <body>
+        <script>
+                window.fbAsyncInit = function() {
+                  FB.init({
+                    appId      : '772833366242667',
+                    xfbml      : true,
+                    version    : 'v2.12'
+                  });
+                  FB.AppEvents.logPageView();
+                };
+              
+                (function(d, s, id){
+                   var js, fjs = d.getElementsByTagName(s)[0];
+                   if (d.getElementById(id)) {return;}
+                   js = d.createElement(s); js.id = id;
+                   js.src = "https://connect.facebook.net/en_US/sdk.js";
+                   fjs.parentNode.insertBefore(js, fjs);
+                 }(document, 'script', 'facebook-jssdk'));
+              </script>
+
+
     <nav class="navbar navbar-expand-lg navbar-light bcolor">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -37,7 +57,12 @@
                     <a id="link-col" class="nav-link" href="#">Winner</a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-col" class="nav-link" href="#">Old Contest</a>
+                    <a id="link-col" class="nav-link" href="/auth/facebook">Old Contest</a>
+                </li>
+                <li class="nav-item">
+                    <form action = "" method = "post">
+                        <input class="nav-link" type="submit" name="upvote" value="Login with facebook" />
+                    </form>
                 </li>
             </ul>
         </div>
