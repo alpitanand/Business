@@ -23,6 +23,9 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 
 
+// Serving static files
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 
 app.use(session({secret: "enter custom sessions secret here",
                 resave: false,
@@ -45,15 +48,32 @@ var port = process.env.PORT || 3000;
 app.set('view engine', 'hbs');
 
 
-// Serving static files
-app.use(express.static(path.join(__dirname, '..', 'public')));
+
+
+
+//Auth middleware
+
+// var auth = function(req,res, next){
+//     if(req.user.displayName){
+//         next();
+//     }
+//     else{
+//         res.send("Please login")
+//     }
+// }
 
 app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: 'email'
   }));
   
   app.get('/', (req,res)=>{
-      res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    if(req.user != undefined){
+        res.render('competition.hbs',{name: req.user.displayName});
+    }
+    else{
+        res.sendFile(path.join(__dirname, '..', 'views/index.html'))
+    }
+     
   })
   
   app.get('/auth/facebook/callback',
@@ -65,13 +85,23 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
       res.redirect('/');
     });
 
+app.get('/selfie',(req,res)=>{
+    res.send(req.user.displayName);
+})
 
 
+app.get('/eventname/sing',(req,res)=>{
+    res.send(req.user.displayName);
+})
 
 app.get('/loggedIn', (req, res) => {
     res.render('competition.hbs',{name: req.user.displayName});
 })
 
+app.get('/logout',(req,res)=>{
+    req.session.destroy();
+    res.redirect('/');
+})
 
 //Listining
 app.listen(port, () => {

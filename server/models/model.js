@@ -7,8 +7,7 @@ var dataschema = mongoose.Schema({
 
 })
 
-var users = mongoose.model('Input_Data',dataschema);
-
+var users = mongoose.model('fblogin',dataschema);
 module.exports = {
     users : users
 }
