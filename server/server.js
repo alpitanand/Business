@@ -20,14 +20,19 @@ var {serializeUser} = require('./config.js');
 var {deserializeUser} = require('./config.js');
 var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var session = require('express-session');
 
 
 
-app.use(cookieParser());
+app.use(session({secret: "enter custom sessions secret here",
+                resave: false,
+                saveUninitialized:false                   
+}));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 
@@ -47,10 +52,13 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: 'email'
   }));
   
+  app.get('/', (req,res)=>{
+      res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  })
   
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/',
+      successRedirect: '/selfie',
       failureRedirect: '/login'
     }),
     function (req, res) {
@@ -61,6 +69,7 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
 
 
 app.get('/selfie', (req, res) => {
+    console.log(req.user.id+"*******************");
     res.render('competition.hbs');
 })
 
