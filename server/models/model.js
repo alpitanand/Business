@@ -8,6 +8,7 @@ var dataschema = mongoose.Schema({
 })
 
 var users = mongoose.model('Input_Data',dataschema);
+
 module.exports = {
     users : users
 }

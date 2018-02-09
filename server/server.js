@@ -58,8 +58,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
   
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/selfie',
-      failureRedirect: '/login'
+      successRedirect: '/loggedIn',
+      failureRedirect: '/'
     }),
     function (req, res) {
       res.redirect('/');
@@ -68,9 +68,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
 
 
 
-app.get('/selfie', (req, res) => {
-    console.log(req.user.id+"*******************");
-    res.render('competition.hbs');
+app.get('/loggedIn', (req, res) => {
+    res.render('competition.hbs',{name: req.user.displayName});
 })
 
 

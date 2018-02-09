@@ -1,8 +1,8 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-// var {
-//   users
-// } = require('./models/model.js');
+var {
+  users
+} = require('./models/model.js');
 
 var serializeUser = passport.serializeUser(function (user, done) {
     done(null, user);
@@ -20,22 +20,23 @@ facebook_login =  passport.use(new FacebookStrategy({
 }, function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     process.nextTick(function () {
-        //    var me = new users({
-        //     email:profile.emails[0].value,
-        //     name:profile.displayName,
-        //     id: profile.id
-        //    });
-        //    user.findOne({email:me.email}, function(err, u) {
-        //     if(!u) {
-        //         me.save(function(err, me) {
-        //             if(err) return done(err);
-        //             done(null,me);
-        //         });
-        //     } else {
-        //         console.log(u);
-        //         done(null, u);
-        //     }
-        // });
+           var me = new users({
+            email:profile.emails[0].value,
+            name:profile.displayName,
+            id: profile.id
+           });
+           users.findOne({email:me.email}, function(err, u) {
+            if(!u) {
+                me.save(function(err, me) {
+                    if(err) 
+                    return done(err);
+                    done(null,me);
+                });
+            } else {
+                return done(u);
+                done(null, u);
+            }
+        });
         return done(null, profile);
     });
 }));
