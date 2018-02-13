@@ -16,8 +16,12 @@ var {
 var {
     facebook_login
 } = require('./config.js');
-var {serializeUser} = require('./config.js');
-var {deserializeUser} = require('./config.js');
+var {
+    serializeUser
+} = require('./config.js');
+var {
+    deserializeUser
+} = require('./config.js');
 var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
@@ -27,12 +31,13 @@ var session = require('express-session');
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 
-app.use(session({secret: "enter custom sessions secret here",
-                resave: false,
-                saveUninitialized:false                   
+app.use(session({
+    secret: "enter custom sessions secret here",
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(passport.initialize());
 
@@ -51,54 +56,49 @@ app.set('view engine', 'hbs');
 
 
 
-//Auth middleware
 
-// var auth = function(req,res, next){
-//     if(req.user.displayName){
-//         next();
-//     }
-//     else{
-//         res.send("Please login")
-//     }
-// }
 
 app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: 'email'
-  }));
-  
-  app.get('/', (req,res)=>{
-    if(req.user != undefined){
-        res.render('competition.hbs',{name: req.user.displayName});
-    }
-    else{
+}));
+
+app.get('/', (req, res) => {
+    if (req.user != undefined) {
+        res.render('competition.hbs', {
+            name: req.user.displayName
+        });
+    } else {
         res.sendFile(path.join(__dirname, '..', 'views/index.html'))
     }
-     
-  })
-  
-  app.get('/auth/facebook/callback',
+
+})
+
+app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/loggedIn',
-      failureRedirect: '/'
+        successRedirect: '/loggedIn',
+        failureRedirect: '/'
     }),
     function (req, res) {
-      res.redirect('/');
+        res.redirect('/');
     });
 
-app.get('/selfie',(req,res)=>{
+
+app.get('/selfie', (req, res) => {
     res.send(req.user.displayName);
 })
 
 
-app.get('/eventname/sing',(req,res)=>{
+app.get('/eventname/sing', (req, res) => {
     res.send(req.user.displayName);
 })
 
 app.get('/loggedIn', (req, res) => {
-    res.render('competition.hbs',{name: req.user.displayName});
+    res.render('competition.hbs', {
+        name: req.user.displayName
+    });
 })
 
-app.get('/logout',(req,res)=>{
+app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 })
