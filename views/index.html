@@ -11,36 +11,40 @@
         crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
 
 
     <title>Hello, world!</title>
 </head>
 
 <body>
-        <script>
-                window.fbAsyncInit = function() {
-                  FB.init({
-                    appId      : '772833366242667',
-                    xfbml      : true,
-                    version    : 'v2.12'
-                  });
-                  FB.AppEvents.logPageView();
-                };
-              
-                (function(d, s, id){
-                   var js, fjs = d.getElementsByTagName(s)[0];
-                   if (d.getElementById(id)) {return;}
-                   js = d.createElement(s); js.id = id;
-                   js.src = "https://connect.facebook.net/en_US/sdk.js";
-                   fjs.parentNode.insertBefore(js, fjs);
-                 }(document, 'script', 'facebook-jssdk'));
-              </script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '772833366242667',
+                xfbml: true,
+                version: 'v2.12'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 
     <nav class="navbar navbar-expand-lg navbar-light bcolor">
         <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -59,10 +63,11 @@
                 <li class="nav-item">
                     <a id="link-col" class="nav-link" href="#">Old Contest</a>
                 </li>
-                <li class="nav-item" >
-                    <a id="fblogin"  title="Please login to continue"  href="/auth/facebook">
-                        <img src="./css/img/fblogin.png"  class="img-fluid">
-                     </a>
+                <li class="nav-item">
+                    <a id="fblogin" title="Please login to continue" data-tippy-theme="honeybee" href="/auth/facebook">
+                        <img src="./css/img/fblogin.png" class="img-fluid">
+                    </a>
+
                 </li>
             </ul>
         </div>
@@ -79,7 +84,7 @@
                                 <h5 class="card-title">#KIIT Darpan</h5>
                                 <p class="card-text">Have the guts to face the darpan</p>
 
-                                <a class="btn btn-dark" href="/eventname/sing" role="button">Compete</a>
+                                <a class="btn btn-dark event" href="/eventname/sing" role="button">Compete</a>
                                 <a role="button" class="btn btn-outline-success">View</a>
                             </div>
                             <div class="card-footer">
@@ -111,7 +116,7 @@
                                 <p class="card-text">Let me take a selfie..!!!</p>
 
 
-                                <a id="selfielogin"class="btn btn-dark" href="/selfie" role="button">Compete</a>
+                                <a class="btn btn-dark event" href="/eventname/selfie" role="button">Compete</a>
                                 <a role="button" class="btn btn-outline-success">View</a>
 
                             </div>
@@ -173,7 +178,7 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
     <script src="./libs/jquery.countdown.min.js"></script>
     <script src="./javascript/timer.js"></script>
     <script src="./javascript/ajaxreq.js"></script>

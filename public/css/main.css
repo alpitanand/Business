@@ -1,68 +1,103 @@
-.navbar{
-    background-color:  #2C3A47; 
+.navbar {
+    background-color: #2C3A47;
     -webkit-box-shadow: 0 8px 6px -6px #999;
     -moz-box-shadow: 0 8px 6px -6px #999;
     box-shadow: 0 8px 6px -6px rgb(80, 78, 78);
-   
 }
-.navbar-nav > li{
-    padding-left:10px;
+
+.navbar-nav>li {
+    padding-left: 10px;
 }
- #link-col{
-     color: white;
-     font-size: 17px;
-     border-bottom: 2px solid transparent;
- }
- #link-col:hover{
+
+#link-col {
+    color: white;
+    font-size: 17px;
+    border-bottom: 2px solid transparent;
+}
+
+#link-col:hover {
     margin: 0px;
-    border-bottom: 2px solid #00ff55;  
- }
-.container-fluid{
-    background-color:#ced2d6;
-   
+    border-bottom: 2px solid #00ff55;
 }
-#fblogin img{
+
+.container-fluid {
+    background-color: #ced2d6;
+}
+
+#fblogin img {
     width: 13rem;
-
 }
 
+.tippy-tooltip.honeybee-theme .tippy-backdrop {
+    /* Your styling here. Example: */
+    background-color: white;
+    border: 2px solid black;
+}
 
+.tippy-tooltip.honeybee-theme .tippy-content {
+    /* Your styling here. Example: */
+    color: black;
+}
 
-.card{
+.card {
     width: 18rem;
     box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
     border-radius: 12px;
     margin: 0 auto;
     height: 27rem;
 }
-.card-img-top{
+
+.card-img-top {
     height: 14rem;
 }
- /* ===============Timer Ui=========== */
- ul#example {
+
+
+/* ===============Timer Ui=========== */
+
+ul#example {
     list-style: none;
     margin: 0px 0;
     padding: 0;
     display: block;
     text-align: center;
-  }
-  
-  ul#example li { display: inline-block; }
-  
-  ul#example li span {
+}
+
+ul#example li {
+    display: inline-block;
+}
+
+ul#example li span {
     font-size: 25px;
     font-weight: 300;
     line-height: 30px;
-  }
-  
-  ul#example li.seperator {
+}
+
+ul#example li.seperator {
     font-size: 30px;
     line-height: 20px;
     vertical-align: top;
-  }
-  
-  ul#example li p {
+}
+
+ul#example li p {
     color: #a7abb1;
     font-size: 20px;
-  }
+}
+
 /* ===================================== */
+
+/* =============templet ============== */
+
+#upload-text{
+    font-weight: 400;
+    font-size: 25px;
+}
+#upload-button{
+font-size: 1.2rem;
+margin:0 1rem;
+}
+.vertical-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }

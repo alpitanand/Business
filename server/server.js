@@ -54,10 +54,6 @@ app.set('view engine', 'hbs');
 
 
 
-
-
-
-
 app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: 'email'
 }));
@@ -82,26 +78,24 @@ app.get('/auth/facebook/callback',
         res.redirect('/');
     });
 
+    app.get('/loggedIn', (req, res) => {
+        res.render('competition.hbs', {
+            name: req.user.displayName
+        });
+    })
+    
+    app.get('/logout', (req, res) => {
+        req.session.destroy();
+        res.redirect('/');
+    })
 
-app.get('/selfie', (req, res) => {
-    res.send(req.user.displayName);
-})
-
-
-app.get('/eventname/sing', (req, res) => {
-    res.send(req.user.displayName);
-})
-
-app.get('/loggedIn', (req, res) => {
-    res.render('competition.hbs', {
+app.get('/:event', (req, res) => {
+    res.render('event.hbs', {
         name: req.user.displayName
     });
 })
 
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
-})
+
 
 //Listining
 app.listen(port, () => {

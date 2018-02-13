@@ -11,30 +11,33 @@
         crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
 
     <title>Hello, world!</title>
 </head>
 
 <body>
-        <script>
-                window.fbAsyncInit = function() {
-                  FB.init({
-                    appId      : '772833366242667',
-                    xfbml      : true,
-                    version    : 'v2.12'
-                  });
-                  FB.AppEvents.logPageView();
-                };
-              
-                (function(d, s, id){
-                   var js, fjs = d.getElementsByTagName(s)[0];
-                   if (d.getElementById(id)) {return;}
-                   js = d.createElement(s); js.id = id;
-                   js.src = "https://connect.facebook.net/en_US/sdk.js";
-                   fjs.parentNode.insertBefore(js, fjs);
-                 }(document, 'script', 'facebook-jssdk'));
-              </script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '772833366242667',
+                xfbml: true,
+                version: 'v2.12'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 
     <nav class="navbar navbar-expand-lg navbar-light bcolor">
@@ -60,7 +63,7 @@
                     <a id="link-col" class="nav-link" href="/logout">Logout</a>
                 </li>
                 <li class="nav-item">
-                   <a id="link-col" class="nav-link">Welcome {{name}}</a>
+                    <a id="link-col" class="nav-link">Welcome {{name}}</a>
                 </li>
             </ul>
         </div>
@@ -77,7 +80,7 @@
                                 <h5 class="card-title">#KIIT Darpan</h5>
                                 <p class="card-text">Have the guts to face the darpan</p>
 
-                                <a class="btn btn-dark" href="/eventname/sing" role="button">Compete</a>
+                                <a class="btn btn-dark" href="/sing" role="button">Compete</a>
                                 <a role="button" class="btn btn-outline-success">View</a>
                             </div>
                             <div class="card-footer">

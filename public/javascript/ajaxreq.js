@@ -1,28 +1,22 @@
-
 $(function () {
-    $('#selfielogin').click(function (e) {
-        console.log("alpit");
+    $('.event').click(function (e) {
         e.preventDefault();
-    
+
         $.ajax({
-            url: '/selfie',
+            url: '/eventname/selfie',
             type: 'GET',
             success: function () {
-                console.log("*********************");
+                console.log("logged in");
             },
-            error: function() {
+            error: function () {
                 var btn = document.querySelector('#fblogin');
-                tippy(btn,{
-                    theme: 'light',
-                    arrow: true,
-                    size: 'large'
-                   
+                tippy(btn, {
+                    size: 'large',
+                    distance: 25
                 })
                 btn._tippy.show();
-                
-             }
-         });
+
+            }
+        });
     })
 })
-
-
