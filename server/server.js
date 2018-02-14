@@ -89,7 +89,7 @@ app.get('/auth/facebook/callback',
         res.redirect('/');
     })
 
-app.get('/:event', (req, res) => {
+app.get('/:event', (req, res) => { 
     res.render('event.hbs', {
         name: req.user.displayName
     });
