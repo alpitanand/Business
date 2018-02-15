@@ -24,8 +24,7 @@ var {
 } = require('./config.js');
 var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var session = require('express-session');
-
+var {upload} = require('./file-upload.js');
 
 // Serving static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -78,23 +77,33 @@ app.get('/auth/facebook/callback',
         res.redirect('/');
     });
 
-    app.get('/loggedIn', (req, res) => {
-        res.render('competition.hbs', {
-            name: req.user.displayName
-        });
-    })
-    
-    app.get('/logout', (req, res) => {
-        req.session.destroy();
-        res.redirect('/');
-    })
+app.get('/loggedIn', (req, res) => {
+    res.render('competition.hbs', {
+        name: req.user.displayName
+    });
+})
 
-app.get('/:event', (req, res) => { 
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+})
+
+app.get('/events/:event', (req, res) => {
     res.render('event.hbs', {
         name: req.user.displayName
     });
 })
 
+
+app.post('/events/upload',function(req,res){
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end(err);
+        }
+        console.log("333333333333333333333333333")
+        res.send("File uploded");
+    });
+});
 
 
 //Listining

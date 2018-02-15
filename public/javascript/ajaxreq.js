@@ -3,7 +3,7 @@ $(function () {
         e.preventDefault();
 
         $.ajax({
-            url: '/eventname/selfie',
+            url: '/events/selfie',
             type: 'GET',
             success: function () {
                 console.log("logged in");
@@ -20,3 +20,26 @@ $(function () {
         });
     })
 })
+
+
+$(function () {
+    $('#upload-form').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/events/upload',
+            type: 'POST',
+            data: new FormData($('form')[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function () {
+                console.log("Uploded");
+            },
+            error: function () {
+               console.log("Not uploded");
+            }
+        });
+    })
+})
+

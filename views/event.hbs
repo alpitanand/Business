@@ -69,8 +69,11 @@
         </div>
     </nav>
     <div class="alert alert-primary text-center vertical-center">
-        <span id="upload-text">Upload an image </span>
- <button type="button" id="upload-button" class="btn btn-success ">Upload...!!!</button>
+         <form   method='post' action='upload' enctype="multipart/form-data">
+         <input id="upload" type="file" class="btn btn-warning" name="userPhoto"/>
+         <input id="upload-form" type="submit">
+        </form>
+    
 </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
