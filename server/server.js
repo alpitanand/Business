@@ -11,21 +11,21 @@ var {
     mongoose
 } = require('./models/mongoose.js');
 var {
-    users
+    usersuploadImformation
 } = require('./models/model.js');
 var {
-    facebook_login
-} = require('./config.js');
-var {
-    serializeUser
-} = require('./config.js');
-var {
+    facebook_login,
+    serializeUser,
     deserializeUser
 } = require('./config.js');
 var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var {upload} = require('./file-upload.js');
-
+var {
+    upload
+} = require('./file-upload.js');
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminJpegRecompress = require('imagemin-jpeg-recompress');
 // Serving static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
@@ -88,21 +88,63 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+var place = "";
 app.get('/events/:event', (req, res) => {
+    place = req.params.event;
     res.render('event.hbs', {
         name: req.user.displayName
     });
 })
 
 
-app.post('/events/upload',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end(err);
+app.post('/events/upload', upload, function (req, res) {
+
+    var fb_id = req.user.id;
+    var email = req.user._json.email;
+    var random = req.rand;
+
+    console.log(fb_id);
+
+    var query = {
+            'Fbid': fb_id
+        },
+        update = {
+            $set: {
+                email: email
+            },
+            $push: {
+                events: {
+                    event: place,
+                    imageId: random
+                }
+            }
+        },
+        options = {
+            upsert: true
+        };
+
+    usersuploadImformation.findOneAndUpdate(query, update, options, function (err, data) {
+        if (err) {
+            console.log("Not able to update");
         }
-        console.log("333333333333333333333333333")
-        res.send("File uploded");
+        else{
+            console.log("Updated");
+        }
     });
+
+
+    imagemin(['./uploads/'+random+'.{JPG,jpg}'], './uploads', {
+        plugins: [
+            imageminJpegRecompress({quality: 'low',min: 30,target:0.91})
+        ]
+     
+    }).then(files => {
+        console.log(files);
+        //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
+    }).catch((err)=>{
+        console.log(err);
+    });
+  
 });
 
 

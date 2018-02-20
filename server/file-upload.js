@@ -2,15 +2,21 @@ var multer = require('multer');
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
+
         callback(null, './uploads');
     },
     filename: function (req, file, callback) {
-        callback(null, file.fieldname + '-' + Date.now());
+        var  rand = Math.random().toString(36).substr(2, 12);
+        req.rand =  rand;
+        ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
+        callback(null, rand+ext);
     }
 });
 
-   var upload= multer({
-        storage: storage
-    }).single('userPhoto');
+var upload = multer({
+    storage: storage
+}).single('userPhoto');
 
-module.exports={upload:upload};
+module.exports = {
+    upload: upload,
+};

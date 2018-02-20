@@ -18,7 +18,7 @@ facebook_login = passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'email'],
 }, function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    // console.log(profile);
     process.nextTick(function () {
         var me = new users({
             email: profile.emails[0].value,
