@@ -23,9 +23,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var {
     upload
 } = require('./file-upload.js');
-const imagemin = require('imagemin');
-const imageminMozjpeg = require('imagemin-mozjpeg');
-const imageminJpegRecompress = require('imagemin-jpeg-recompress');
+var jimp = require('jimp');
+
 // Serving static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
@@ -126,25 +125,25 @@ app.post('/events/upload', upload, function (req, res) {
     usersuploadImformation.findOneAndUpdate(query, update, options, function (err, data) {
         if (err) {
             console.log("Not able to update");
-        }
-        else{
+        } else {
             console.log("Updated");
         }
     });
 
 
-    imagemin(['./uploads/'+random+'.{JPG,jpg}'], './uploads', {
-        plugins: [
-            imageminJpegRecompress({quality: 'low',min: 30,target:0.91})
-        ]
-     
-    }).then(files => {
-        console.log(files);
-        //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
-    }).catch((err)=>{
-        console.log(err);
+    jimp.read('./uploads/Big/' + random + req.ext, function (err, lenna) {
+        if (err) throw err;
+        lenna.quality(60)
+            .scaleToFit(1024, 1024)
+            .write('./uploads/Big/' + random + req.ext); // save
     });
-  
+
+    jimp.read('./uploads/Big/' + random + req.ext, function (err, lenna) {
+        if (err) throw err;
+        lenna.scaleToFit(256, 256) // resize
+            .quality(60) // set JPEG qualit                // set greyscale
+            .write('./uploads/Small/' + random + req.ext); // save
+    });
 });
 
 
