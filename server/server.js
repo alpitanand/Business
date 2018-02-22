@@ -141,7 +141,7 @@ app.post('/events/upload', upload, function (req, res) {
     jimp.read('./uploads/Big/' + random + req.ext, function (err, lenna) {
         if (err) throw err;
         lenna.scaleToFit(256, 256) // resize
-            .quality(60) // set JPEG qualit                // set greyscale
+            .quality(60) // set JPEG qualit             
             .write('./uploads/Small/' + random + req.ext); // save
     });
 });

@@ -1,24 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="style.css" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-
-    <title>Hello, world!</title>
+    <title>Document</title>
 </head>
 
 <body>
     <script>
-        window.fbAsyncInit = function () {
+         window.fbAsyncInit = function () {
             FB.init({
                 appId: '772833366242667',
                 xfbml: true,
@@ -38,54 +35,93 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    <nav>
+        <div class="nav-wrapper  blue lighten-1">
+            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a href="#">Live Events</a>
+                </li>
+                <li>
+                    <a href="#">Winners</a>
+                </li>
+                <li>
+                    <a>Welcome {{name}}</a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
+                </li>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light">Logout</a>
+                </li>
 
+            </ul>
 
-    <nav class="navbar navbar-expand-lg navbar-light bcolor">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a id="link-col" class="nav-link" href="#">Live
-                        <span class="sr-only">(current)</span>
-                    </a>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="#">Live Events</a>
                 </li>
-                <li class="nav-item">
-                    <a id="link-col" class="nav-link" href="#">Up-Comming</a>
+                <li>
+                    <a href="#">Winners</a>
                 </li>
-                <li class="nav-item">
-                    <a id="link-col" class="nav-link" href="#">Winner</a>
+                <li>
+                    <a>Welcome {{name}}</a>
                 </li>
-                <li class="nav-item">
-                    <a id="link-col" class="nav-link" href="/logout">Logout</a>
+                <li>
+                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
                 </li>
-                <li class="nav-item">
-                    <a id="link-col" class="nav-link">Welcome {{name}}</a>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="alert alert-primary text-center vertical-center">
-         <form   method='post' action='upload' enctype="multipart/form-data">
-         <input id="upload" type="file" class="btn btn-warning" name="userPhoto"/>
-         <input id="upload-form" type="submit">
-        </form>
-    
-</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
-    <script src="/libs/jquery.countdown.min.js"></script>
-    <script src="/javascript/timer.js"></script>
-    <script src="/javascript/ajaxreq.js"></script>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Upload a image</h4>
+           
 
+                <form method='post' action='upload' enctype="multipart/form-data">
+                    <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
+                   
+                    <div class="file-field input-field">
+                        <div class="btn">
+                          <span>File</span>
+                          <input type="file" name="userPhoto">
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text">
+                        </div>
+                      </div>
+                    
+                    <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                          </button>
+                </form>
+            
+           
+
+        </div>
+
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script src="/javascript/ajaxreq.js"></script>
+        <script>
+            $(".button-collapse").sideNav();
+
+            $(document).ready(function () {
+                // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+                $('.modal').modal();
+            });
+        </script>
 </body>
 
 </html>
