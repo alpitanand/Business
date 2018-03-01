@@ -13,6 +13,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
+    "handlebars-helpers": "^0.10.0",
     "hbs": "^4.0.1",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-pngquant": "^5.0.1",

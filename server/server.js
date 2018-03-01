@@ -23,7 +23,12 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var {
     upload
 } = require('./file-upload.js');
+var {check}= require('./authenticate');
 var jimp = require('jimp');
+var helpers = require('handlebars-helpers');
+var compare = helpers.comparison({
+    hbs: hbs
+  });
 
 // Serving static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -88,11 +93,26 @@ app.get('/logout', (req, res) => {
 })
 
 var place = "";
-app.get('/events/:event', (req, res) => {
+app.get('/events/:event',check ,(req, res) => {
     place = req.params.event;
-    res.render('event.hbs', {
-        name: req.user.displayName
-    });
+    usersuploadImformation.find({},function(err, data){
+      
+        
+     if(data[0]==undefined){
+        res.render('event.hbs', {
+            name: req.user.displayName
+          
+        });
+    }
+    else{
+        res.render('event.hbs', {
+            name: req.user.displayName,
+            event:data,
+            eventName:req.params.event
+        });
+    }
+    console.log(data[1]);
+    })
 })
 
 

@@ -8,14 +8,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="style.css" rel="stylesheet">
+
 
     <title>Document</title>
 </head>
 
 <body>
     <script>
-         window.fbAsyncInit = function () {
+        window.fbAsyncInit = function () {
             FB.init({
                 appId: '772833366242667',
                 xfbml: true,
@@ -84,44 +84,63 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Upload a image</h4>
-           
 
-                <form method='post' action='upload' enctype="multipart/form-data">
-                    <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
-                   
-                    <div class="file-field input-field">
-                        <div class="btn">
-                          <span>File</span>
-                          <input type="file" name="userPhoto">
-                        </div>
-                        <div class="file-path-wrapper">
-                          <input class="file-path validate" type="text">
-                        </div>
-                      </div>
-                    
-                    <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
-                            <i class="material-icons right">send</i>
-                          </button>
-                </form>
-            
-           
+
+            <form method='post' action='upload' enctype="multipart/form-data">
+                <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
+
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="userPhoto">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+
+                <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+
+
 
         </div>
+    </div>
+    
+    <div class="row">
+    
+     {{#each event}}
+        {{#each this.events}}
+        {{#is this.event ../../eventName }}
+        <div class="col s4">{{this.imageId}}</div>
+        {{!-- {{else}}
+        <div class="col s4">{{this.imageId}}</div> --}}
+        {{/is}}
+        {{/each}}
+     {{/each}}
+    
+</div>
 
 
-        <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-        <script src="/javascript/ajaxreq.js"></script>
-        <script>
-            $(".button-collapse").sideNav();
 
-            $(document).ready(function () {
-                // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-                $('.modal').modal();
-            });
-        </script>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
+    <script src="/javascript/ajaxreq.js"></script>
+    <script>
+        $(".button-collapse").sideNav();
+
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+    </script>
 </body>
 
 </html>
