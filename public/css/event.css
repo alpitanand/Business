@@ -1,0 +1,50 @@
+body {
+  background-color: rgba(228, 222, 222, 0.733)
+}
+
+.row {
+  margin: 30px;
+}
+
+.card {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 8px;
+ 
+}
+
+.card-action {
+  padding: 5px 0px !important;
+}
+
+.number_of_likes{
+ margin-left: 14px; 
+}
+
+
+/* .card-image{
+  height: 309px;
+} */
+
+.like {
+  padding-right: 17.5%;   
+  padding-left: 5%; 
+}
+
+
+
+.rank {
+  border-left: 1px solid rgba(202, 202, 202, 0.733);
+  padding: 8px 5px;
+}
+
+.fav{
+  position: absolute;
+  margin-left: 15%; 
+  color: rgb(223, 60, 60) 
+}
+.eq{
+  position: absolute;
+  margin-left: 15%; 
+  color: green;
+}

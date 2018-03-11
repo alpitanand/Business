@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-
+    <link rel="stylesheet" href="/css/basic.min.css">
+    <link rel="stylesheet" href="/css/dropzone.css">
+    <link rel="stylesheet" href="/css/event.css">
     <title>Document</title>
 </head>
 
@@ -86,6 +87,7 @@
             <h4>Upload a image</h4>
 
 
+            {{!--
             <form method='post' action='upload' enctype="multipart/form-data">
                 <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
 
@@ -102,27 +104,90 @@
                 <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>
                 </button>
+            </form> --}}
+
+            <form method='post' action='/events/{{eventName}}/upload' enctype="multipart/form-data" class="dropzone" id="myAwesomeDropzone">
+                <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
+                {{!--
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="userPhoto">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+
+                <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button> --}}
+
             </form>
 
 
 
         </div>
     </div>
-    
-    <div class="row">
-    
-     {{#each event}}
-        {{#each this.events}}
-        {{#is this.event ../../eventName }}
-        <div class="col s4">{{this.imageId}}</div>
-        {{!-- {{else}}
-        <div class="col s4">{{this.imageId}}</div> --}}
-        {{/is}}
-        {{/each}}
-     {{/each}}
-    
-</div>
 
+    <div class="row">
+
+        {{#each event}} {{#is this.event ../eventName }}
+
+        <div class="col s12 m3 13 al">
+            <div class="card ">
+                <div class="card-image">
+                    <img src="/Small/{{this.imageId}}.JPG">
+                </div>
+                <div class="card-action">
+
+                    <a href="/love/{{this.imageId}}" class="like">Love
+                        <i class="material-icons fav">favorite</i>
+                    </a>
+
+
+                    <span class="rank">Rank: xxx
+                        <i class="material-icons eq">equalizer</i>
+                    </span>
+                    {{!-- {{this.imageId}} --}}
+                </div>
+                <div class="card-action">
+                    <span class="number_of_likes">Number of likes</span>
+                </div>
+
+            </div>
+        </div>
+
+        {{/is}} {{/each}}
+
+
+    </div>
+
+    <div class="pagination pagination-centered center-align">
+        <ul>
+            {{#paginate pagination type="first"}}
+            <li {{#if disabled}}class="disabled" {{/if}}>
+                <a href="{{n}}">First</a>
+            </li>
+            {{/paginate}} {{#paginate pagination type="previous"}}
+            <li {{#if disabled}}class="disabled" {{/if}}>
+                <a href="{{n}}">Prev</a>
+            </li>
+            {{/paginate}} {{#paginate pagination type="middle" limit="7"}}
+            <li {{#if active}}class="active" {{/if}}>
+                <a href="{{n}}">{{n}}</a>
+            </li>
+            {{/paginate}} {{#paginate pagination type="next"}}
+            <li {{#if disabled}}class="disabled" {{/if}}>
+                <a href="{{n}}">Next</a>
+            </li>
+            {{/paginate}} {{#paginate pagination type="last"}}
+            <li {{#if disabled}}class="disabled" {{/if}}>
+                <a href="{{n}}">Last</a>
+            </li>
+            {{/paginate}}
+        </ul>
+    </div>
 
 
     <!--Import jQuery before materialize.js-->
@@ -133,6 +198,8 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
     <script src="/javascript/ajaxreq.js"></script>
+    <script src="/libs/dropzone.js"></script>
+    <script src="/javascript/drop.js"></script>
     <script>
         $(".button-collapse").sideNav();
 
@@ -141,6 +208,7 @@
             $('.modal').modal();
         });
     </script>
+
 </body>
 
 </html>
