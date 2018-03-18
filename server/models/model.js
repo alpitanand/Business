@@ -21,7 +21,19 @@ var likeSchema = new mongoose.Schema({
     imageId: String,
     email: String,
     Fbid: String,
-    event:String
+    event:String,
+    
+    love:{type:Number, default:0},
+    laugh:{type:Number, default:0},
+    sad:{type:Number, default:0},
+
+    total:{type:Number, default:0},
+
+   voteArray:[{
+       Fbid: String,
+       react: String
+   }]
+
 })
 
 likeSchema.plugin(mongoosePaginate);

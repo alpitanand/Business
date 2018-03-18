@@ -139,20 +139,38 @@
                 <div class="card-image">
                     <img src="/Small/{{this.imageId}}.JPG">
                 </div>
-                <div class="card-action">
+                <div class="card-action sp1">
+                    <div class="action-time">
+                        <a href="/{{this.imageId}}/love" class="like sp">
+                      
+                            <i class="material-icons fav">favorite</i>
+                            
+                        </a>
+                        <span  id="{{this.imageId}}" class="like-text">{{this.love}}</span>
+                        
+                    </div>
+                    <div class="action-time">
+                        <a href="/{{this.imageId}}/laugh" class="haha sp">
+                        
+                            <i class="material-icons laugh">sentiment_very_satisfied</i>
+                            
+                        </a>
+                        <span  id="{{this.imageId}}laugh" class="haha-text">{{this.laugh}}</span>
+                    </div>
+                    <div class="action-time">
+                        <a href="/{{this.imageId}}/sad" class="downvote sp">
+                            <i class="material-icons down">trending_down</i>
+                            
+                        </a>
+                        <span id="{{this.imageId}}sad" class="downvote-text">{{this.sad}}</span>
 
-                    <a href="/love/{{this.imageId}}" class="like">Love
-                        <i class="material-icons fav">favorite</i>
-                    </a>
-
-
-                    <span class="rank">Rank: xxx
-                        <i class="material-icons eq">equalizer</i>
-                    </span>
+                    </div>
                     {{!-- {{this.imageId}} --}}
                 </div>
+
                 <div class="card-action">
-                    <span class="number_of_likes">Number of likes</span>
+                    <span class="number_of_likes">Number of likes: </span>
+                    <span id="{{this.imageId}}">{{this.vote}}</span>
                 </div>
 
             </div>
@@ -188,6 +206,33 @@
             {{/paginate}}
         </ul>
     </div>
+    <div class="fixed-action-btn vertical">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li>
+                <a class="btn-floating red">
+                    <i class="material-icons">insert_chart</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating yellow darken-1">
+                    <i class="material-icons">format_quote</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating green">
+                    <i class="material-icons">publish</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating blue">
+                    <i class="material-icons">attach_file</i>
+                </a>
+            </li>
+        </ul>
+    </div>
 
 
     <!--Import jQuery before materialize.js-->
@@ -208,6 +253,7 @@
             $('.modal').modal();
         });
     </script>
+
 
 </body>
 

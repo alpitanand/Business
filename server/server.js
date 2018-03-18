@@ -67,11 +67,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(passport.initialize());
 
+app.use(passport.initialize());
 app.use(passport.session());
 
 
@@ -120,9 +121,548 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
-app.get('/love/:id', (req, res) => {
-    res.send("loved");
+app.get('/:id/love', (req, res) => {
+    console.log("Hitting");
+    var image_Id = req.params.id;
+    var fb_id = req.user.id;
+    var query = {
+        "imageId": image_Id
+    }
+    var upvote = {
+        $inc: {
+            love: 1
+        },
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"love"
+            }
+        }
+    }
+
+    var downvote = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"love"
+            }
+        },
+        $inc: {
+            love: -1
+        }
+    }
+
+    var changeLaugh = {
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"love"
+            }
+        },
+        $inc:{
+            love:1
+        }
+    }
+
+var changeLaughPull = {
+    $pull: {
+        "voteArray":{
+            Fbid:fb_id,
+            react:"laugh"
+        }
+    },
+    $inc: {
+        laugh: -1
+    },
+}
+    var changeSadPull = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        },
+        $inc: {
+            sad: -1
+        }
+    }
+
+    var changeSad = {
+      
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"love"
+            }
+        },
+       
+        $inc:{
+            love:1
+        }
+    }
+
+    likeImformation.find({
+        $and:[{
+            "imageId": image_Id
+        },{
+            "voteArray.Fbid":fb_id
+        }]
+    },function(err,data){
+        if(data.length===0){
+            likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("upvoted");
+                                res.send("upvoted");
+                            }
+                });
+        }
+        else if(data.length>0){
+            console.log("its already there "+data[0].voteArray.length);
+            for(var z = 0; z<data[0].voteArray.length; z++){
+                if(data[0].voteArray[z].Fbid === fb_id){
+                    if(data[0].voteArray[z].react==="love"){
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
+                                        if (err) {
+                                            res.status(404)
+                                        } else {
+                                            console.log("downvoted");
+                                            res.send("downvoted");
+                                        }
+                             });
+                    }
+                   else if(data[0].voteArray[z].react === "laugh"){
+                       console.log("laughed");
+                       likeImformation.findOneAndUpdate(query,changeLaughPull,function(err, pulled){
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("laughPulled");
+                           
+                        }
+                       })
+                        likeImformation.findOneAndUpdate(query, changeLaugh, function (err, voted) {
+                            if (err) {
+                                console.log(err);
+                                res.status(404)
+                            } else {
+                                console.log("downLaugh");
+                                res.send("downLaugh");
+                            }
+                 });
+                    }
+
+                    else if(data[0].voteArray[z].react === "sad"){
+
+                        likeImformation.findOneAndUpdate(query, changeSadPull, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("Sadness pulled");
+                                
+                            }
+                 });
+                        likeImformation.findOneAndUpdate(query, changeSad, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("changeSad");
+                                res.send("downSad");
+                            }
+                 });
+                    }
+
+                }
+            }
+        }
+    })
 })
+
+
+app.get('/:id/laugh', (req, res) => {
+    console.log("Hitting laugh");
+    var image_Id = req.params.id;
+    var fb_id = req.user.id;
+    var query = {
+        "imageId": image_Id
+    }
+    var upvote = {
+        $inc: {
+            laugh: 1
+        },
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"laugh"
+            }
+        }
+    }
+
+    var downvote = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"laugh"
+            }
+        },
+        $inc: {
+            laugh: -1
+        }
+    }
+
+    var changeLove = {
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"laugh"
+            }
+        },
+        $inc:{
+            laugh:1
+        }
+    }
+
+var changeLovePull = {
+    $pull: {
+        "voteArray":{
+            Fbid:fb_id,
+            react:"love"
+        }
+    },
+    $inc: {
+        love: -1
+    },
+}
+    var changeSadPull = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        },
+        $inc: {
+            sad: -1
+        }
+    }
+
+    var changeSad = {
+      
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"laugh"
+            }
+        },
+       
+        $inc:{
+            laugh:1
+        }
+    }
+
+    likeImformation.find({
+        $and:[{
+            "imageId": image_Id
+        },{
+            "voteArray.Fbid":fb_id
+        }]
+    },function(err,data){
+        if(data.length===0){
+            likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("upvoted");
+                                res.send("laughed");
+                            }
+                });
+        }
+        else if(data.length>0){
+            console.log("its already there "+data[0].voteArray.length);
+            for(var z = 0; z<data[0].voteArray.length; z++){
+                if(data[0].voteArray[z].Fbid === fb_id){
+                    if(data[0].voteArray[z].react==="laugh"){
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
+                                        if (err) {
+                                            console.log(err);
+                                            res.status(404)
+                                        } else {
+                                            console.log("downvoted");
+                                            res.send("notlaughed");
+                                        }
+                             });
+                    }
+                   else if(data[0].voteArray[z].react === "love"){
+                       console.log("laughed");
+                       likeImformation.findOneAndUpdate(query,changeLovePull,function(err, pulled){
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("laughPulled");
+                           
+                        }
+                       })
+                        likeImformation.findOneAndUpdate(query, changeLove, function (err, voted) {
+                            if (err) {
+                                console.log(err);
+                                res.status(404)
+                            } else {
+                                console.log("downLove");
+                                res.send("downLove");
+                            }
+                 });
+                    }
+
+                    else if(data[0].voteArray[z].react === "sad"){
+
+                        likeImformation.findOneAndUpdate(query, changeSadPull, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("Sadness pulled");
+                                
+                            }
+                 });
+                        likeImformation.findOneAndUpdate(query, changeSad, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("changeSad");
+                                res.send("downSad");
+                            }
+                 });
+                    }
+
+                }
+            }
+        }
+    })
+})
+
+app.get('/:id/sad', (req, res) => {
+    console.log("Hitting laugh");
+    var image_Id = req.params.id;
+    var fb_id = req.user.id;
+    var query = {
+        "imageId": image_Id
+    }
+    var upvote = {
+        $inc: {
+            sad: 1
+        },
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        }
+    }
+
+    var downvote = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        },
+        $inc: {
+            sad: -1
+        }
+    }
+
+    var changeLove = {
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        },
+        $inc:{
+            sad:1
+        }
+    }
+
+var changeLovePull = {
+    $pull: {
+        "voteArray":{
+            Fbid:fb_id,
+            react:"love"
+        }
+    },
+    $inc: {
+        love: -1
+    },
+}
+    var changeLaughPull = {
+        $pull: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"laugh"
+            }
+        },
+        $inc: {
+            laugh: -1
+        }
+    }
+
+    var changeLaugh = {
+      
+        $push: {
+            "voteArray":{
+                Fbid:fb_id,
+                react:"sad"
+            }
+        },
+       
+        $inc:{
+            sad:1
+        }
+    }
+
+    likeImformation.find({
+        $and:[{
+            "imageId": image_Id
+        },{
+            "voteArray.Fbid":fb_id
+        }]
+    },function(err,data){
+        if(data.length===0){
+            likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("upvoted");
+                                res.send("sad");
+                            }
+                });
+        }
+        else if(data.length>0){
+            console.log("its already there "+data[0].voteArray.length);
+            for(var z = 0; z<data[0].voteArray.length; z++){
+                if(data[0].voteArray[z].Fbid === fb_id){
+                    if(data[0].voteArray[z].react==="sad"){
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
+                                        if (err) {
+                                            console.log(err);
+                                            res.status(404)
+                                        } else {
+                                            console.log("downvoted");
+                                            res.send("notSad");
+                                        }
+                             });
+                    }
+                   else if(data[0].voteArray[z].react === "love"){
+                       console.log("laughed");
+                       likeImformation.findOneAndUpdate(query,changeLovePull,function(err, pulled){
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("laughPulled");
+                           
+                        }
+                       })
+                        likeImformation.findOneAndUpdate(query, changeLove, function (err, voted) {
+                            if (err) {
+                                console.log(err);
+                                res.status(404)
+                            } else {
+                                console.log("downLove");
+                                res.send("downLove");
+                            }
+                 });
+                    }
+
+                    else if(data[0].voteArray[z].react === "laugh"){
+
+                        likeImformation.findOneAndUpdate(query, changeLaughPull, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("laugh pulled");
+                                
+                            }
+                 });
+                        likeImformation.findOneAndUpdate(query, changeLaugh, function (err, voted) {
+                            if (err) {
+                                res.status(404)
+                            } else {
+                                console.log("changeSad");
+                                res.send("downLaugh");
+                            }
+                 });
+                    }
+
+                }
+            }
+        }
+    })
+})
+
+
+    // likeImformation.find({
+    //     $and: [{
+    //         "imageId": image_Id
+    //     }, {
+    //         "votedBy": fb_id
+    //     }]
+    // }).count(function (err, count_num) {
+    //     if (count_num === 0) {
+    //         likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+    //             if (err) {
+    //                 res.status(404)
+    //             } else {
+    //                 console.log("upvoted");
+    //                 res.send("upvoted");
+    //             }
+    //         });
+    //     } else if (count_num > 0) {
+    //         console.log(count_num);
+    //         likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
+    //             if (err) {
+    //                 res.status(404)
+    //             } else {
+    //                 console.log("downupvoted");
+    //                 res.send("downvoted");
+    //             }
+    //         });
+    //     }
+    // })
+
+
+    //     if (likeImformation.find({
+    //             "imageId": image_Id
+    //         }, {
+    //             "votedBy": fb_id
+    //         }).count() == 0) {
+    // console.log("ALpit is awesome");
+    //         likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+    //             if (err) {
+    //                 res.status(404)
+    //             } else {
+
+    //                 res.send("upvoted");
+    //             }
+    //         });
+    //     } else if (likeImformation.find({
+    //             "imageId": image_Id
+    //         }, {
+    //             "votedBy": fb_id
+    //         }).count() > 0) {
+    //         likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
+    //             if (err) {
+    //                 res.status(404)
+    //             } else {
+
+    //                 res.send("downvoted");
+    //             }
+    //         });
+
+    //     }
+
+
+
+
+
 
 var place = "";
 
@@ -153,13 +693,13 @@ app.get('/events/:event/:page', (req, res) => {
     // var perPage = 20;
     var page = req.params.page;
     var event = req.params.event;
-    var number_of_pages=1;
-    
-    
+    var number_of_pages = 1;
+
+
     likeImformation.count({
         "event": event
-    },function(err, count){
-        number_of_pages=count;
+    }, function (err, count) {
+        number_of_pages = count;
     })
 
 
@@ -179,16 +719,25 @@ app.get('/events/:event/:page', (req, res) => {
             });
         } else {
             // console.log("*******************************************");
-            // console.log(count + "*************" + "alpit");
+            // console.log(data.docs[0].vote);
             // console.log("*******************************************");
-            var pageNumber =Math.ceil((number_of_pages) / 20)-1;
+            var pageNumber = Math.ceil((number_of_pages) / 20);
+        
+         //     var rankArr=[];
+        //     for(var j=0;j<data.docs.length;j++){
+        //         var x = data.docs[j].vote;
+        //         likeImformation.find({$and:[{"event":event},{ vote: { $gt: x } } ] }).count(function(e,c){
+        //            rankArr.push(c);
+        //    })
+        //     }
+           
             res.render('event.hbs', {
                 name: req.user.displayName,
                 event: data.docs,
                 eventName: req.params.event,
                 pagination: {
                     page: page,
-                    pageCount: pageNumber+1
+                    pageCount: pageNumber
                 }
 
             });
@@ -286,8 +835,8 @@ app.post('/events/:event/upload', upload, function (req, res) {
 
 
     });
-res.status(200);
-res.end('File have been uploded')
+    res.status(200);
+    res.end('File have been uploded')
 });
 
 

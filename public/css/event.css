@@ -9,12 +9,15 @@ body {
 .card {
   margin: 10px;
   padding: 5px;
-  border-radius: 8px;
- 
+  border-radius: 8px; 
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  
 }
 
 .card-action {
   padding: 5px 0px !important;
+  /* padding-right: 5px !important; */
+  
 }
 
 .number_of_likes{
@@ -26,25 +29,62 @@ body {
   height: 309px;
 } */
 
-.like {
-  padding-right: 17.5%;   
-  padding-left: 5%; 
+.action-time{
+  display: inline-block;
+  border: 1px solid rgba(202, 202, 202, 0.733);
+  width: 32%;
+  padding-top:2px;
+  padding-left: 4px; 
+  border-radius:8px; 
 }
 
 
-
-.rank {
-  border-left: 1px solid rgba(202, 202, 202, 0.733);
-  padding: 8px 5px;
-}
-
-.fav{
+.like-text{
   position: absolute;
-  margin-left: 15%; 
-  color: rgb(223, 60, 60) 
+  padding-left: 5%;
+ 
+  
 }
-.eq{
+
+.haha-text{
   position: absolute;
-  margin-left: 15%; 
+  padding-left: 10%;
+  /* border-right: 1px solid rgba(202, 202, 202, 0.733); */
+ 
+}
+
+.downvote-text{
+  position: absolute;
+  padding-left: 10%;
+}
+
+.haha i{
+  color:rgba(255, 0, 0, 0.911)
+}
+
+.downvote i{
   color: green;
 }
+
+
+
+@media screen and (min-width: 310px) {
+
+  .like-text{
+    position: absolute;
+    margin-left: -15px;
+   
+  }
+  
+  .haha-text{
+    position: absolute;
+    margin-left: -28px;
+  
+  }
+  
+  .downvote-text{
+    position: absolute;
+    margin-left: -28px;
+   
+  }
+} 
