@@ -1,0 +1,9 @@
+#fblogin img {
+    width: 14rem;
+    margin-top:5%;
+   
+  }
+  #fb a:hover {
+    background-color: transparent !important; 
+  }
+  

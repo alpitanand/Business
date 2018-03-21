@@ -1,0 +1,11 @@
+.love_not_logged i{
+    color: orange;
+} 
+
+.laugh_not_logged i{
+    color:rgba(255, 0, 0, 0.911)
+}
+
+.sad_not_logged i{
+    color: green;
+}

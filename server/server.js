@@ -103,11 +103,11 @@ app.get('/', (req, res) => {
 
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/loggedIn',
+        // successRedirect:'/loggedIn',
         failureRedirect: '/'
     }),
     function (req, res) {
-        res.redirect('/');
+        res.redirect( req.session.returnTo || '/loggedIn');
     });
 
 app.get('/loggedIn', (req, res) => {
@@ -120,6 +120,8 @@ app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 })
+
+////--------------------Dont friggin change this code--------------------------------/////
 
 app.get('/:id/love', (req, res) => {
     console.log("Hitting");
@@ -597,67 +599,9 @@ var changeLovePull = {
         }
     })
 })
+////--------------------Dont friggin change this code--------------------------------/////
 
-
-    // likeImformation.find({
-    //     $and: [{
-    //         "imageId": image_Id
-    //     }, {
-    //         "votedBy": fb_id
-    //     }]
-    // }).count(function (err, count_num) {
-    //     if (count_num === 0) {
-    //         likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
-    //             if (err) {
-    //                 res.status(404)
-    //             } else {
-    //                 console.log("upvoted");
-    //                 res.send("upvoted");
-    //             }
-    //         });
-    //     } else if (count_num > 0) {
-    //         console.log(count_num);
-    //         likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
-    //             if (err) {
-    //                 res.status(404)
-    //             } else {
-    //                 console.log("downupvoted");
-    //                 res.send("downvoted");
-    //             }
-    //         });
-    //     }
-    // })
-
-
-    //     if (likeImformation.find({
-    //             "imageId": image_Id
-    //         }, {
-    //             "votedBy": fb_id
-    //         }).count() == 0) {
-    // console.log("ALpit is awesome");
-    //         likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
-    //             if (err) {
-    //                 res.status(404)
-    //             } else {
-
-    //                 res.send("upvoted");
-    //             }
-    //         });
-    //     } else if (likeImformation.find({
-    //             "imageId": image_Id
-    //         }, {
-    //             "votedBy": fb_id
-    //         }).count() > 0) {
-    //         likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
-    //             if (err) {
-    //                 res.status(404)
-    //             } else {
-
-    //                 res.send("downvoted");
-    //             }
-    //         });
-
-    //     }
+   
 
 
 
@@ -666,35 +610,14 @@ var changeLovePull = {
 
 var place = "";
 
-// app.get('/events/:event', check,(req, res) => {
-//     place = req.params.event;
-//    likeImformation.find({})
-//             	          .exec(function(err, data){
-//      if(data[0]==undefined){
-//         res.render('event.hbs', {
-//             name: req.user.displayName
-//         });
-//     }
-//     else{
-//         res.render('event.hbs', {
-//             name: req.user.displayName,
-//             event:data,
-//             eventName:req.params.event,
-//             pagination: {
-//                 page: 1,
-//                 pageCount: 10
-//               }
-//         });
-//     }
-//     })
-// })
+
 
 app.get('/events/:event/:page', (req, res) => {
     // var perPage = 20;
     var page = req.params.page;
     var event = req.params.event;
     var number_of_pages = 1;
-
+    req.session.returnTo = req.path; 
 
     likeImformation.count({
         "event": event
@@ -730,7 +653,18 @@ app.get('/events/:event/:page', (req, res) => {
         //            rankArr.push(c);
         //    })
         //     }
-           
+        if(req.user === undefined){
+            res.render('event-notLogged.hbs', {
+                event: data.docs,
+                eventName: req.params.event,
+                pagination: {
+                    page: page,
+                    pageCount: pageNumber
+                }
+
+            });
+        }   
+else{
             res.render('event.hbs', {
                 name: req.user.displayName,
                 event: data.docs,
@@ -742,8 +676,26 @@ app.get('/events/:event/:page', (req, res) => {
 
             });
         }
+        }
     })
 
+})
+
+app.get('/events/:event/imageId/:id',(req, res)=>{
+    var id = req.params.id;
+    req.session.returnTo = req.path; 
+    
+    if(req.user === undefined){
+        res.render('fullImage-notLogged.hbs', {
+            fullPreview:id
+        });
+    }   
+else{
+        res.render('fullImage.hbs', {
+            name: req.user.displayName,
+            fullPreview:id
+        });
+    }
 })
 
 
@@ -790,19 +742,19 @@ app.post('/events/:event/upload', upload, function (req, res) {
     })
 
 
-    jimp.read('./uploads/Big/' + random + req.ext, function (err, lenna) {
+    jimp.read('./uploads/Big/' + random + '.jpg', function (err, lenna) {
         if (err) throw err;
         lenna.quality(80)
             .scaleToFit(1024, 1024)
-            .write('./uploads/Big/' + random + req.ext); // save
+            .write('./uploads/Big/' + random + '.jpg'); // save
     });
 
-    jimp.read('./uploads/Big/' + random + req.ext, function (err, lenna) {
+    jimp.read('./uploads/Big/' + random + '.jpg', function (err, lenna) {
         if (err) throw err;
         lenna.exifRotate()
             .cover(280, 320) // resize
             .quality(80) // set JPEG qualit
-            .write('./uploads/Small/' + random + req.ext); // save
+            .write('./uploads/Small/' + random + '.jpg'); // save
 
         // usersuploadImformation.findOneAndUpdate(query, update, options, function (err, data) {
         //     if (err) {

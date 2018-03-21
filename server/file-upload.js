@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
         req.rand =  rand;
         ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
         req.ext = ext;
-        callback(null, rand+ext);
+        callback(null, rand+'.jpg');
     }
 });
 

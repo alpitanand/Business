@@ -8,9 +8,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="/css/basic.min.css">
-    <link rel="stylesheet" href="/css/dropzone.css">
     <link rel="stylesheet" href="/css/event.css">
+    <link rel="stylesheet" href="/css/event-notLogged.css">
     <title>Document</title>
 </head>
 
@@ -50,13 +49,12 @@
                     <a href="#">Winners</a>
                 </li>
                 <li>
-                    <a>Welcome {{name}}</a>
+                    <a class="btn disabled">Upload</a>
                 </li>
-                <li>
-                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
-                </li>
-                <li>
-                    <a href="/logout" class="waves-effect waves-light">Logout</a>
+                <li id="fb">
+                    <a id="fblogin" title="Please login to continue" data-tippy-theme="honeybee" href="/auth/facebook">
+                        <img src="/css/img/fblogin.png" class="img-fluid">
+                    </a>
                 </li>
 
             </ul>
@@ -69,13 +67,12 @@
                     <a href="#">Winners</a>
                 </li>
                 <li>
-                    <a>Welcome {{name}}</a>
+                    <a class="btn disabled">Upload</a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
-                </li>
-                <li>
-                    <a href="/logout" class="waves-effect waves-light">Logout</a>
+                    <a id="fblogin" title="Please login to continue" data-tippy-theme="honeybee" href="/auth/facebook">
+                        <img src="/css/img/fblogin.png" class="img-fluid">
+                    </a>
                 </li>
             </ul>
         </div>
@@ -143,8 +140,8 @@
                     </a>
                 </div>
                 <div class="card-action sp1">
-                    <div class="action-time">
-                        <a style="display:block;width:100%;" href="/{{this.imageId}}/love" class="like sp">
+                    <div class="action-time" title="Login to love">
+                        <a style="display:block;width:100%;" class="love_not_logged sp">
 
                             <i class="material-icons fav">favorite</i>
                             <span class="vote-number" id="{{this.imageId}}" class="like-text">{{this.love}}</span>
@@ -152,15 +149,15 @@
 
 
                     </div>
-                    <div class="action-time">
-                        <a style="display:block;width:100%;" href="/{{this.imageId}}/laugh" class="haha sp">
+                    <div class="action-time" title="Login to laugh">
+                        <a style="display:block;width:100%;" class="laugh_not_logged sp">
 
                             <i class="material-icons laugh">sentiment_very_satisfied</i>
                             <span class="vote-number" id="{{this.imageId}}laugh" class="haha-text">{{this.laugh}}</span>
                         </a>
                     </div>
-                    <div class="action-time">
-                        <a style="display:block;width:100%;" href="/{{this.imageId}}/sad" class="downvote sp">
+                    <div class="action-time" title="Login to downvote">
+                        <a style="display:block;width:100%;" class="sad_not_logged sp">
                             <i class="material-icons down">trending_down</i>
                             <span class="vote-number" id="{{this.imageId}}sad" class="downvote-text">{{this.sad}}</span>
 
@@ -246,8 +243,6 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
     <script src="/javascript/ajaxreq.js"></script>
-    <script src="/libs/dropzone.js"></script>
-    <script src="/javascript/drop.js"></script>
     <script>
         $(".button-collapse").sideNav();
 
@@ -255,6 +250,10 @@
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
         });
+
+        tippy('.action-time', {
+            arrow: true
+        })
     </script>
 
 

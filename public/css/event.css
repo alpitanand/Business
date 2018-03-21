@@ -24,6 +24,14 @@ body {
  margin-left: 14px; 
 }
 
+.vote-number{
+  position: absolute;
+  margin-left:6%; 
+  margin-top:.2%; 
+ color: black;
+}
+
+
 
 /* .card-image{
   height: 309px;
@@ -58,6 +66,10 @@ body {
   padding-left: 10%;
 }
 
+.like i{
+  color: orange;
+}
+
 .haha i{
   color:rgba(255, 0, 0, 0.911)
 }
@@ -88,3 +100,31 @@ body {
    
   }
 } 
+
+.share{
+  width: 100%;
+}
+#fblogin img {
+  width: 14rem;
+  margin-top:5%;
+ 
+}
+#fb a:hover {
+  background-color: transparent !important; 
+}
+
+
+
+.imageClick{
+  position:absolute; 
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+
+  z-index: 1;
+
+  /* fixes overlap error in IE7/8, 
+     make sure you have an empty gif */
+ 
+}

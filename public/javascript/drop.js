@@ -9,9 +9,20 @@ Dropzone.options.myAwesomeDropzone = {
         console.log("Alpit");
         this.on("complete", function (file) {
             
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-              location.reload();
-            }
+          
+                
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    
+                    setTimeout(function() {
+                        //your code to be executed after 1 second
+                        location.reload();
+                      }, 2000);
+                   
+                  }
+              
+
+           
+
           });
     }
 };
