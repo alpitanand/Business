@@ -672,7 +672,7 @@ else{
                 pagination: {
                     page: page,
                     pageCount: pageNumber
-                }
+                } 
 
             });
         }
