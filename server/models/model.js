@@ -22,6 +22,7 @@ var likeSchema = new mongoose.Schema({
     email: String,
     Fbid: String,
     event:String,
+    name:String,
     
     love:{type:Number, default:0},
     laugh:{type:Number, default:0},

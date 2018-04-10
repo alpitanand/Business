@@ -9,35 +9,11 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="/css/basic.min.css">
-    <link rel="stylesheet" href="/css/event.css">
-     <link rel="stylesheet" type="text/css" media="screen" href="/css/fblogin.css" />
-
+    <link rel="stylesheet" href="/css/ranklist.css">
     <title>Document</title>
 </head>
-
 <body>
-    <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '772833366242667',
-                xfbml: true,
-                version: 'v2.12'
-            });
-            FB.AppEvents.logPageView();
-        };
-
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <nav>
+<nav>
         <div class="nav-wrapper  grey darken-4">
             <a href="#!" class="brand-logo">Logo</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse">
@@ -51,14 +27,10 @@
                     <a href="#">Winners</a>
                 </li>
                 <li>
-                    <a href="#"  title="Login to upload" class="waves-effect waves-light btn red sp darken-3">Upload</a>
+                    <a>Welcome {{name}}</a>
                 </li>
-                 <li class="fb">
-                    <a href="/auth/facebook">
-                        <button class="loginBtn loginBtn--facebook">
-                            Login with Facebook
-                        </button>
-                    </a>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light">Logout</a>
                 </li>
 
             </ul>
@@ -74,73 +46,50 @@
                     <a>Welcome {{name}}</a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
-                </li>
-                <li>
                     <a href="/logout" class="waves-effect waves-light">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-
-    <div class="row outer-row">
+<div class="row">
 
         {{#each event}} {{#is this.event ../eventName }}
 
-        <div class="col s12 m3 l3 al">
+        <div class="col s12 m3 13 al">
             <div class="card ">
-
                 <div class="card-image">
                     <img src="/Small/{{this.imageId}}.JPG">
                     <a href="/events/{{this.event}}/imageId/{{this.imageId}}">
                         <span class="imageClick"></span>
                     </a>
                 </div>
-                <div class="row inner-row">
-                     <div class="card-action">
-                        <a href="/events/{{this.event}}/imageId/{{this.imageId}}" class="waves-effect grey darken-4 waves-light btn share">id : {{this.imageId}}</a>
+                <div class="card-action sp1">
+                    <div class="action-time">
+                        
+                            <p>
+                                <span>Total score :</span>
+                                <span class="vote-number" class="like-text">{{this.total}}</span>
+                            </p>
                     </div>
 
-                    <div class="card-action">
+                <div class="card-action share-section">
 
+                    <a class="waves-effect waves-light btn share">button</a>
 
-                        <div class="col s12 m12 l4 action action1">
-                            <a href="#" title="Login to love" class="like sp">
-                                <i class="material-icons fav">favorite</i>
-                                <span class="vote-number" id="{{this.imageId}}" class="like-text">{{this.love}}</span>
-                            </a>
-                        </div>
-
-
-
-                        <div class="col s6 m6 l4 action action2">
-                            <a href="#" title="Login to laugh" class="haha sp">
-                                <i class="material-icons laugh">sentiment_very_satisfied</i>
-                                <span class="vote-number" id="{{this.imageId}}laugh" class="haha-text">{{this.laugh}}</span>
-                            </a>
-                        </div>
-
-
-                        <div class="col s6 m6 l4 action">
-                            <a href="#" title="Login to downvote" class="downvote sp">
-                                <i class="material-icons down">trending_down</i>
-                                <span class="vote-number" id="{{this.imageId}}sad" class="downvote-text">{{this.sad}}</span>
-                            </a>
-                        </div>
-
-                    </div>
                 </div>
 
             </div>
         </div>
+         </div>
 
         {{/is}} {{/each}}
 
 
+   
     </div>
 
-    <div class="pagination pagination-centered center-align">
+<div class="pagination pagination-centered center-align">
         <ul>
             {{#paginate pagination type="first"}}
             <li {{#if disabled}}class="disabled" {{/if}}>
@@ -165,27 +114,7 @@
             {{/paginate}}
         </ul>
     </div>
-    <div class="fixed-action-btn vertical">
-        <a class="btn-floating btn-large red">
-            <i class="large material-icons">mode_edit</i>
-        </a>
-        <ul>
-            <li>
-                 <a class="btn-floating red" href="/events/{{eventName}}/leaderboard/1">
-                    <i class="material-icons">insert_chart</i>
-                </a>
-            </li>
-         
-            <li>
-                <a class="btn-floating green sp" title="Login to upload">
-                    <i class="material-icons">publish</i>
-                </a>
-            </li>
-           
-        </ul>
-    </div>
-
-<footer class="page-footer grey darken-4">
+      <footer class="page-footer grey darken-4">
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
@@ -213,24 +142,13 @@
             </div>
           </div>
         </footer>
-
-    <!--Import jQuery before materialize.js-->
+ <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
-    <script>
-        $(".button-collapse").sideNav();
 
-    </script>
-    <script>
-        tippy('.sp', {
-            arrow: true,
-            arrowType: 'round'
-        })
-    </script>
 </body>
 
 </html>

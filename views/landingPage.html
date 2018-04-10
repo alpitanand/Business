@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/landingPage.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/fblogin.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a href="/">Live Events</a>
+                </li>
+                <li>
+                    <a href="#">Hall of Fame</a>
+                </li>
+                <li>
+                    <a href="#">Past Events</a>
+                </li>
+                <li class="fb">
+                    <a href="/auth/facebook">
+                        <button class="loginBtn loginBtn--facebook">
+                            Login with Facebook
+                        </button>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="sass.html">Live Events</a>
+                </li>
+                <li>
+                    <a href="badges.html">Hall of Fame</a>
+                </li>
+                <li>
+                    <a href="mobile.html">Past Events</a>
+                </li>
+                <li class="fb">
+                    <a href="/auth/facebook">
+                        <button class="loginBtn loginBtn--facebook">
+                            Login with Facebook
+                        </button>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <h2 class="decorated">
+        <span>Live Events</span>
+    </h2>
+
+
+   <div class="layout">
+        <div class="row">
+            <div class="col s12 m3 13">
+                <div class="card card-size">
+                    <div class="card-image banner">
+                        <img src="/css/img/Retro-Mic.jpg">
+
+                    </div>
+                    <div class="card-content">
+                        <p class="event-name">
+                            <b>#KIIT Darpan</b>
+                        </p>
+                        <p>Do you have the guts to face the darpan</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/events/sing/1">
+                            <button class="btn waves-effect  red lighten-2 waves-light al" type="submit" name="action">Peek in
+                            </button>
+                        </a>
+                        <a href="#modal1">
+                                <button data-target="modal1" class="btn waves-effect light-green darken-2 waves-light modal-trigger al" type="submit" name="action">Rules
+                                </button>
+                            </a>
+                    </div>
+                    <div class="card-action">
+                            <ul id="example">
+                                    <li>
+                                        <span class="days">00</span>
+                                    </li>
+                                    <li class="seperator">:</li>
+                                    <li>
+                                        <span class="hours">00</span>
+                                    </li>
+                                    <li class="seperator">:</li>
+                                    <li>
+                                        <span class="minutes">00</span>
+                                    </li>
+                                    <li class="seperator">:</li>
+                                    <li>
+                                        <span class="seconds">00</span>
+                                    </li>
+                                </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+        <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <h4>Modal Header</h4>
+                  <p>A bunch of text</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+              </div>
+
+
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="/libs/jquery.countdown.min.js"></script>
+    <script src="/javascript/timer.js"></script>
+    <script>
+        $(".button-collapse").sideNav();
+
+
+$(document).ready(function(){
+    $('.modal').modal();
+  });
+         
+    </script>
+</body>
+
+</html>

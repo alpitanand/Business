@@ -1,5 +1,5 @@
 $('#example').countdown({
-    date: '12/24/2020 23:59:59'
+    date: '03/28/2018 6:59:30'
     }, function () {
       alert('Merry Christmas!');
     });

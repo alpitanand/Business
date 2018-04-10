@@ -86,17 +86,17 @@ app.set('view engine', 'hbs');
 
 
 
-app.get('/auth/facebook', passport.authenticate('facebook', {
+app.get('/auth/facebook', passport.authenticate('facebook',{
     scope: 'email'
 }));
 
 app.get('/', (req, res) => {
     if (req.user != undefined) {
-        res.render('competition.hbs', {
+        res.render('landingPage-logged.hbs', {
             name: req.user.displayName
         });
     } else {
-        res.sendFile(path.join(__dirname, '..', 'views/index.html'))
+        res.sendFile(path.join(__dirname, '..', 'views/landingPage.html'))
     }
 
 })
@@ -107,11 +107,11 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/'
     }),
     function (req, res) {
-        res.redirect( req.session.returnTo || '/loggedIn');
+        res.redirect(req.session.returnTo || '/loggedIn');
     });
 
 app.get('/loggedIn', (req, res) => {
-    res.render('competition.hbs', {
+    res.render('landingPage-logged.hbs', {
         name: req.user.displayName
     });
 })
@@ -132,56 +132,62 @@ app.get('/:id/love', (req, res) => {
     }
     var upvote = {
         $inc: {
-            love: 1
+            love: 1,
+            total: 1
+
         },
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"love"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
             }
         }
+
     }
 
     var downvote = {
         $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"love"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
             }
         },
         $inc: {
-            love: -1
+            love: -1,
+            total: -1
+
         }
     }
 
     var changeLaugh = {
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"love"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
             }
         },
-        $inc:{
-            love:1
+        $inc: {
+            love: 1
         }
     }
 
-var changeLaughPull = {
-    $pull: {
-        "voteArray":{
-            Fbid:fb_id,
-            react:"laugh"
-        }
-    },
-    $inc: {
-        laugh: -1
-    },
-}
+    var changeLaughPull = {
+        $pull: {
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
+            }
+        },
+        $inc: {
+            laugh: -1,
+            total: -.5 + 1
+        },
+    }
     var changeSadPull = {
         $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
             }
         },
         $inc: {
@@ -190,60 +196,59 @@ var changeLaughPull = {
     }
 
     var changeSad = {
-      
+
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"love"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
             }
         },
-       
-        $inc:{
-            love:1
+
+        $inc: {
+            love: 1,
+            total: 2
         }
     }
 
     likeImformation.find({
-        $and:[{
+        $and: [{
             "imageId": image_Id
-        },{
-            "voteArray.Fbid":fb_id
+        }, {
+            "voteArray.Fbid": fb_id
         }]
-    },function(err,data){
-        if(data.length===0){
+    }, function (err, data) {
+        if (data.length === 0) {
             likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                if (err) {
+                    res.status(404)
+                } else {
+                    console.log("upvoted");
+                    res.send("upvoted");
+                }
+            });
+        } else if (data.length > 0) {
+            console.log("its already there " + data[0].voteArray.length);
+            for (var z = 0; z < data[0].voteArray.length; z++) {
+                if (data[0].voteArray[z].Fbid === fb_id) {
+                    if (data[0].voteArray[z].react === "love") {
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
                             if (err) {
                                 res.status(404)
                             } else {
-                                console.log("upvoted");
-                                res.send("upvoted");
+                                console.log("downvoted");
+                                res.send("downvoted");
                             }
-                });
-        }
-        else if(data.length>0){
-            console.log("its already there "+data[0].voteArray.length);
-            for(var z = 0; z<data[0].voteArray.length; z++){
-                if(data[0].voteArray[z].Fbid === fb_id){
-                    if(data[0].voteArray[z].react==="love"){
-                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
-                                        if (err) {
-                                            res.status(404)
-                                        } else {
-                                            console.log("downvoted");
-                                            res.send("downvoted");
-                                        }
-                             });
-                    }
-                   else if(data[0].voteArray[z].react === "laugh"){
-                       console.log("laughed");
-                       likeImformation.findOneAndUpdate(query,changeLaughPull,function(err, pulled){
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log("laughPulled");
-                           
-                        }
-                       })
+                        });
+                    } else if (data[0].voteArray[z].react === "laugh") {
+                        console.log("laughed");
+                        likeImformation.findOneAndUpdate(query, changeLaughPull, function (err, pulled) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("laughPulled");
+
+                            }
+                        })
                         likeImformation.findOneAndUpdate(query, changeLaugh, function (err, voted) {
                             if (err) {
                                 console.log(err);
@@ -252,19 +257,17 @@ var changeLaughPull = {
                                 console.log("downLaugh");
                                 res.send("downLaugh");
                             }
-                 });
-                    }
-
-                    else if(data[0].voteArray[z].react === "sad"){
+                        });
+                    } else if (data[0].voteArray[z].react === "sad") {
 
                         likeImformation.findOneAndUpdate(query, changeSadPull, function (err, voted) {
                             if (err) {
                                 res.status(404)
                             } else {
                                 console.log("Sadness pulled");
-                                
+
                             }
-                 });
+                        });
                         likeImformation.findOneAndUpdate(query, changeSad, function (err, voted) {
                             if (err) {
                                 res.status(404)
@@ -272,7 +275,7 @@ var changeLaughPull = {
                                 console.log("changeSad");
                                 res.send("downSad");
                             }
-                 });
+                        });
                     }
 
                 }
@@ -291,119 +294,122 @@ app.get('/:id/laugh', (req, res) => {
     }
     var upvote = {
         $inc: {
-            laugh: 1
+            laugh: 1,
+            total: .5
+
         },
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"laugh"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
             }
         }
     }
 
     var downvote = {
         $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"laugh"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
             }
         },
         $inc: {
-            laugh: -1
+            laugh: -1,
+            total: -.5
         }
     }
 
     var changeLove = {
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"laugh"
-            }
-        },
-        $inc:{
-            laugh:1
-        }
-    }
-
-var changeLovePull = {
-    $pull: {
-        "voteArray":{
-            Fbid:fb_id,
-            react:"love"
-        }
-    },
-    $inc: {
-        love: -1
-    },
-}
-    var changeSadPull = {
-        $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
             }
         },
         $inc: {
-            sad: -1
+            laugh: 1,
+            total: -1 + .5
+        }
+    }
+
+    var changeLovePull = {
+        $pull: {
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
+            }
+        },
+        $inc: {
+            love: -1
+        },
+    }
+    var changeSadPull = {
+        $pull: {
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
+            }
+        },
+        $inc: {
+            sad: -1,
+            total: 1 + .5
         }
     }
 
     var changeSad = {
-      
+
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"laugh"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
             }
         },
-       
-        $inc:{
-            laugh:1
+
+        $inc: {
+            laugh: 1
         }
     }
 
     likeImformation.find({
-        $and:[{
+        $and: [{
             "imageId": image_Id
-        },{
-            "voteArray.Fbid":fb_id
+        }, {
+            "voteArray.Fbid": fb_id
         }]
-    },function(err,data){
-        if(data.length===0){
+    }, function (err, data) {
+        if (data.length === 0) {
             likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                if (err) {
+                    res.status(404)
+                } else {
+                    console.log("upvoted");
+                    res.send("laughed");
+                }
+            });
+        } else if (data.length > 0) {
+            console.log("its already there " + data[0].voteArray.length);
+            for (var z = 0; z < data[0].voteArray.length; z++) {
+                if (data[0].voteArray[z].Fbid === fb_id) {
+                    if (data[0].voteArray[z].react === "laugh") {
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
                             if (err) {
+                                console.log(err);
                                 res.status(404)
                             } else {
-                                console.log("upvoted");
-                                res.send("laughed");
+                                console.log("downvoted");
+                                res.send("notlaughed");
                             }
-                });
-        }
-        else if(data.length>0){
-            console.log("its already there "+data[0].voteArray.length);
-            for(var z = 0; z<data[0].voteArray.length; z++){
-                if(data[0].voteArray[z].Fbid === fb_id){
-                    if(data[0].voteArray[z].react==="laugh"){
-                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
-                                        if (err) {
-                                            console.log(err);
-                                            res.status(404)
-                                        } else {
-                                            console.log("downvoted");
-                                            res.send("notlaughed");
-                                        }
-                             });
-                    }
-                   else if(data[0].voteArray[z].react === "love"){
-                       console.log("laughed");
-                       likeImformation.findOneAndUpdate(query,changeLovePull,function(err, pulled){
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log("laughPulled");
-                           
-                        }
-                       })
+                        });
+                    } else if (data[0].voteArray[z].react === "love") {
+                        console.log("laughed");
+                        likeImformation.findOneAndUpdate(query, changeLovePull, function (err, pulled) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("laughPulled");
+
+                            }
+                        })
                         likeImformation.findOneAndUpdate(query, changeLove, function (err, voted) {
                             if (err) {
                                 console.log(err);
@@ -412,19 +418,17 @@ var changeLovePull = {
                                 console.log("downLove");
                                 res.send("downLove");
                             }
-                 });
-                    }
-
-                    else if(data[0].voteArray[z].react === "sad"){
+                        });
+                    } else if (data[0].voteArray[z].react === "sad") {
 
                         likeImformation.findOneAndUpdate(query, changeSadPull, function (err, voted) {
                             if (err) {
                                 res.status(404)
                             } else {
                                 console.log("Sadness pulled");
-                                
+
                             }
-                 });
+                        });
                         likeImformation.findOneAndUpdate(query, changeSad, function (err, voted) {
                             if (err) {
                                 res.status(404)
@@ -432,7 +436,7 @@ var changeLovePull = {
                                 console.log("changeSad");
                                 res.send("downSad");
                             }
-                 });
+                        });
                     }
 
                 }
@@ -450,119 +454,121 @@ app.get('/:id/sad', (req, res) => {
     }
     var upvote = {
         $inc: {
-            sad: 1
+            sad: 1,
+            total: -1
         },
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
             }
         }
     }
 
     var downvote = {
         $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
             }
         },
         $inc: {
-            sad: -1
+            sad: -1,
+            total: 1
         }
     }
 
     var changeLove = {
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
-            }
-        },
-        $inc:{
-            sad:1
-        }
-    }
-
-var changeLovePull = {
-    $pull: {
-        "voteArray":{
-            Fbid:fb_id,
-            react:"love"
-        }
-    },
-    $inc: {
-        love: -1
-    },
-}
-    var changeLaughPull = {
-        $pull: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"laugh"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
             }
         },
         $inc: {
-            laugh: -1
+            sad: 1,
+            total: -2
+        }
+    }
+
+    var changeLovePull = {
+        $pull: {
+            "voteArray": {
+                Fbid: fb_id,
+                react: "love"
+            }
+        },
+        $inc: {
+            love: -1
+        },
+    }
+    var changeLaughPull = {
+        $pull: {
+            "voteArray": {
+                Fbid: fb_id,
+                react: "laugh"
+            }
+        },
+        $inc: {
+            laugh: -1,
+            total: -1.5
         }
     }
 
     var changeLaugh = {
-      
+
         $push: {
-            "voteArray":{
-                Fbid:fb_id,
-                react:"sad"
+            "voteArray": {
+                Fbid: fb_id,
+                react: "sad"
             }
         },
-       
-        $inc:{
-            sad:1
+
+        $inc: {
+            sad: 1
         }
     }
 
     likeImformation.find({
-        $and:[{
+        $and: [{
             "imageId": image_Id
-        },{
-            "voteArray.Fbid":fb_id
+        }, {
+            "voteArray.Fbid": fb_id
         }]
-    },function(err,data){
-        if(data.length===0){
+    }, function (err, data) {
+        if (data.length === 0) {
             likeImformation.findOneAndUpdate(query, upvote, function (err, voted) {
+                if (err) {
+                    res.status(404)
+                } else {
+                    console.log("upvoted");
+                    res.send("sad");
+                }
+            });
+        } else if (data.length > 0) {
+            console.log("its already there " + data[0].voteArray.length);
+            for (var z = 0; z < data[0].voteArray.length; z++) {
+                if (data[0].voteArray[z].Fbid === fb_id) {
+                    if (data[0].voteArray[z].react === "sad") {
+                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
                             if (err) {
+                                console.log(err);
                                 res.status(404)
                             } else {
-                                console.log("upvoted");
-                                res.send("sad");
+                                console.log("downvoted");
+                                res.send("notSad");
                             }
-                });
-        }
-        else if(data.length>0){
-            console.log("its already there "+data[0].voteArray.length);
-            for(var z = 0; z<data[0].voteArray.length; z++){
-                if(data[0].voteArray[z].Fbid === fb_id){
-                    if(data[0].voteArray[z].react==="sad"){
-                        likeImformation.findOneAndUpdate(query, downvote, function (err, voted) {
-                                        if (err) {
-                                            console.log(err);
-                                            res.status(404)
-                                        } else {
-                                            console.log("downvoted");
-                                            res.send("notSad");
-                                        }
-                             });
-                    }
-                   else if(data[0].voteArray[z].react === "love"){
-                       console.log("laughed");
-                       likeImformation.findOneAndUpdate(query,changeLovePull,function(err, pulled){
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log("laughPulled");
-                           
-                        }
-                       })
+                        });
+                    } else if (data[0].voteArray[z].react === "love") {
+                        console.log("laughed");
+                        likeImformation.findOneAndUpdate(query, changeLovePull, function (err, pulled) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("laughPulled");
+
+                            }
+                        })
                         likeImformation.findOneAndUpdate(query, changeLove, function (err, voted) {
                             if (err) {
                                 console.log(err);
@@ -571,19 +577,17 @@ var changeLovePull = {
                                 console.log("downLove");
                                 res.send("downLove");
                             }
-                 });
-                    }
-
-                    else if(data[0].voteArray[z].react === "laugh"){
+                        });
+                    } else if (data[0].voteArray[z].react === "laugh") {
 
                         likeImformation.findOneAndUpdate(query, changeLaughPull, function (err, voted) {
                             if (err) {
                                 res.status(404)
                             } else {
                                 console.log("laugh pulled");
-                                
+
                             }
-                 });
+                        });
                         likeImformation.findOneAndUpdate(query, changeLaugh, function (err, voted) {
                             if (err) {
                                 res.status(404)
@@ -591,7 +595,7 @@ var changeLovePull = {
                                 console.log("changeSad");
                                 res.send("downLaugh");
                             }
-                 });
+                        });
                     }
 
                 }
@@ -601,7 +605,7 @@ var changeLovePull = {
 })
 ////--------------------Dont friggin change this code--------------------------------/////
 
-   
+
 
 
 
@@ -617,15 +621,13 @@ app.get('/events/:event/:page', (req, res) => {
     var page = req.params.page;
     var event = req.params.event;
     var number_of_pages = 1;
-    req.session.returnTo = req.path; 
+    req.session.returnTo = req.path;
 
     likeImformation.count({
         "event": event
     }, function (err, count) {
         number_of_pages = count;
     })
-
-
 
     likeImformation.paginate(likeImformation.find({
         "event": event
@@ -641,60 +643,133 @@ app.get('/events/:event/:page', (req, res) => {
                 name: req.user.displayName
             });
         } else {
-            // console.log("*******************************************");
-            // console.log(data.docs[0].vote);
-            // console.log("*******************************************");
+
             var pageNumber = Math.ceil((number_of_pages) / 20);
-        
-         //     var rankArr=[];
-        //     for(var j=0;j<data.docs.length;j++){
-        //         var x = data.docs[j].vote;
-        //         likeImformation.find({$and:[{"event":event},{ vote: { $gt: x } } ] }).count(function(e,c){
-        //            rankArr.push(c);
-        //    })
-        //     }
-        if(req.user === undefined){
-            res.render('event-notLogged.hbs', {
-                event: data.docs,
-                eventName: req.params.event,
-                pagination: {
-                    page: page,
-                    pageCount: pageNumber
-                }
 
-            });
-        }   
-else{
-            res.render('event.hbs', {
-                name: req.user.displayName,
-                event: data.docs,
-                eventName: req.params.event,
-                pagination: {
-                    page: page,
-                    pageCount: pageNumber
-                } 
+            if (req.user === undefined) {
+                res.render('event-notLogged.hbs', {
+                    event: data.docs,
+                    eventName: req.params.event,
+                    pagination: {
+                        page: page,
+                        pageCount: pageNumber
+                    }
 
-            });
-        }
+                });
+            } else {
+                res.render('event.hbs', {
+                    name: req.user.displayName,
+                    event: data.docs,
+                    eventName: req.params.event,
+                    pagination: {
+                        page: page,
+                        pageCount: pageNumber
+                    }
+
+                });
+            }
         }
     })
 
 })
 
-app.get('/events/:event/imageId/:id',(req, res)=>{
+app.get('/events/:event/leaderboard/:page', (req, res) => {
+    var page = req.params.page;
+    var event = req.params.event;
+    var number_of_pages = 1;
+    req.session.returnTo = req.path;
+
+    likeImformation.count({
+        "event": event
+    }, function (err, count) {
+        number_of_pages = count;
+    })
+
+    likeImformation.paginate(likeImformation.find({
+        "event": event
+    }), {
+        sort: {
+            total: -1
+        },
+        page: page,
+        limit: 20
+    }, function (err, data) {
+        if (data === undefined) {
+            res.render('rankList.hbs', {
+                name: req.user.displayName
+            });
+        } else {
+
+            var pageNumber = Math.ceil((number_of_pages) / 20);
+
+            if (req.user === undefined) {
+                res.render('rankList.hbs', {
+                    event: data.docs,
+                    eventName: req.params.event,
+                    pagination: {
+                        page: page,
+                        pageCount: pageNumber
+                    }
+
+                });
+            } else {
+                res.render('rankList-logged.hbs', {
+                    name: req.user.displayName,
+                    event: data.docs,
+                    eventName: req.params.event,
+                    pagination: {
+                        page: page,
+                        pageCount: pageNumber
+                    }
+
+                });
+            }
+        }
+    })
+
+})
+
+app.get('/events/:event/imageId/:id', (req, res) => {
     var id = req.params.id;
-    req.session.returnTo = req.path; 
-    
-    if(req.user === undefined){
-        res.render('fullImage-notLogged.hbs', {
-            fullPreview:id
-        });
-    }   
-else{
-        res.render('fullImage.hbs', {
-            name: req.user.displayName,
-            fullPreview:id
-        });
+    req.session.returnTo = req.path;
+
+    if (req.user === undefined) {
+        likeImformation.findOne({
+            "imageId": id
+        }, function (err, data) {
+            var d = data._id.getTimestamp();
+            res.render('fullImage-notLogged.hbs', {
+                fullPreview: id,
+                love: data.love,
+                laugh: data.laugh,
+                downvote: data.sad,
+                total: data.total,
+                time: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+                name: data.name,
+                fullUrl:req.path
+
+            });
+        })
+    } else {
+        likeImformation.findOne({
+            "imageId": id
+        }, function (err, data) {
+            var d = data._id.getTimestamp();
+            res.render('fullImage.hbs', {
+                name: req.user.displayName,
+                fullPreview: id,
+                love: data.love,
+                laugh: data.laugh,
+                downvote: data.sad,
+                total: data.total,
+                time: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+                nameOfUploder: data.name,
+                fullUrl:req.path
+
+
+            });
+        })
+
     }
 })
 
@@ -705,6 +780,7 @@ app.post('/events/:event/upload', upload, function (req, res) {
     var email = req.user._json.email;
     var random = req.rand;
     var place = req.params.event;
+    var name = req.user.displayName;
 
     console.log(fb_id);
 
@@ -738,14 +814,15 @@ app.post('/events/:event/upload', upload, function (req, res) {
         'Fbid': fb_id,
         'imageId': random,
         "email": email,
-        'event': place
+        'event': place,
+        "name": name
     })
 
 
     jimp.read('./uploads/Big/' + random + '.jpg', function (err, lenna) {
         if (err) throw err;
-        lenna.quality(80)
-            .scaleToFit(1024, 1024)
+        lenna.exifRotate()
+            .resize(700, jimp.AUTO)
             .write('./uploads/Big/' + random + '.jpg'); // save
     });
 

@@ -1,16 +1,29 @@
-body {
-  background-color: rgba(228, 222, 222, 0.733)
-}
-.card{
-  margin: 10px;
-  padding: 5px;
-  border-radius: 8px;
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); 
+/* .action{
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+  padding: 5px !important;
 }
 
+.action i{
+  padding-left: 15px; 
+}
+.action a{
+  padding-left: 10px; 
+}
+.card-action{
+ padding: 5px !important;
+
+}
+.action1{
+  border-right: 1px solid rgb(190, 190, 190); 
+}
+.action2{
+  border-right: 1px solid rgb(190, 190, 190); 
+} */
 
 .action a{
-  border: 1px solid rgb(190, 190, 190);
+  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-content: space-between;
@@ -21,7 +34,6 @@ body {
 
 .action span{
   padding-left: 8px;
-  color: black !important;
 }
 .card-action{
  
@@ -64,12 +76,4 @@ body {
   /* fixes overlap error in IE7/8, 
      make sure you have an empty gif */
  
-}
-
-.copyright{
-  padding-left:10px; 
-}
-
-footer{
-  border-top: 5px solid rgb(50, 182, 38); 
 }

@@ -9,7 +9,25 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="/css/fullImage.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/fblogin.css" />
     <title>Document</title>
+    <style>
+        .page {
+            background:url("/Big/{{fullPreview}}.JPG");
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(50px);
+            position: fixed;
+
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -35,7 +53,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <nav>
-        <div class="nav-wrapper  blue lighten-1">
+        <div class="nav-wrapper  grey darken-4">
             <a href="#!" class="brand-logo">Logo</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse">
                 <i class="material-icons">menu</i>
@@ -47,12 +65,13 @@
                 <li>
                     <a href="#">Winners</a>
                 </li>
-               <li id="fb">
-                    <a id="fblogin" title="Please login to continue" data-tippy-theme="honeybee" href="/auth/facebook">
-                        <img src="/css/img/fblogin.png" class="img-fluid">
+                <li class="fb">
+                    <a href="/auth/facebook">
+                        <button class="loginBtn loginBtn--facebook">
+                            Login with Facebook
+                        </button>
                     </a>
                 </li>
-
             </ul>
 
             <ul class="side-nav" id="mobile-demo">
@@ -62,15 +81,116 @@
                 <li>
                     <a href="#">Winners</a>
                 </li>
-                <li id="fb">
-                    <a id="fblogin" title="Please login to continue" data-tippy-theme="honeybee" href="/auth/facebook">
-                        <img src="/css/img/fblogin.png" class="img-fluid">
+                <li class="fb">
+                    <a href="/auth/facebook">
+                        <button class="loginBtn loginBtn--facebook">
+                            Login with Facebook
+                        </button>
                     </a>
                 </li>
             </ul>
         </div>
     </nav>
-{{fullPreview}}
+    <div class="page"></div>
 
-    </body>
-    </html>
+      <div class="showCase">
+        <div class="card">
+            <div class="card-image">
+                <img class="responsive-img" src="/Big/{{fullPreview}}.JPG">
+                <a href="https://www.facebook.com/sharer/sharer.php?app_id=772833366242667&sdk=joey&u={{fullUrl}}&display=popup&ref=plugin&src=share_button" class="share-btn btn-floating halfway-fab waves-effect waves-light green darken-2"><i class="material-icons">share</i></a>
+            </div>
+
+            <div class="card-action">
+                <div class="row">
+                    <div class="love fix col s12 m12 l4">
+                        <i class="material-icons fav">favorite</i>
+                        <span>Love : </span>
+                        <span id="love-data" class="data">{{love}}</span>
+
+                    </div>
+                    <div class="haha fix col s6 m6 l4">
+                        <i class="material-icons laugh">sentiment_very_satisfied</i>
+                        <span>Haha :</span>
+                        <span id="laugh-data" class="data ">{{laugh}}</span>
+                    </div>
+                    <div class="downvote fix col s6 m6 l4">
+                        <i class="material-icons down">trending_down</i>
+                        <span>Downvote :</span>
+                        <span id="downvote-data" class="data">{{downvote}}</span>
+                    </div>
+                    <div class=" buttton-design col s12 m12 l6">
+                        <a class="lovebtn btn waves-effect waves-light red lighten-1" title="Login to love" >Love</a>
+                        <a class="hahabtn waves-effect waves-light btn  green lighten-1" title="Login to laugh" >Haha</a>
+                        <a class="downbtn waves-effect waves-light btn  light-blue accent-4" title="Login to downvote" >Downvote</a>
+                    </div>
+                    <div class="totalScore col s12 m12 l6">
+                        <i class="material-icons">poll</i>
+                        <span>Total Score:</span>
+                        <span class="scoreCard"> {{total}}</span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-action last">
+                <div class="row">
+                    <div class="love totalScore col s12 m12 l4">
+                        <span>Uploded By: {{name}}</span>
+                    </div>
+                    <div class="haha totalScore col s6 m6 l4">
+                        <span>{{time}}</span>
+                    </div>
+                    <div class="downvote totalScore col s6 m6 l4">
+                        <span>Report pic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer grey darken-4">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <p class="grey-text text-lighten-4">
+                    <div class="col s12 m3 l3">
+                    <a class="grey-text text-lighten-4" href="#">About us</a>
+                </div>
+                 <div class="col s12 m3 l3">
+                    <a class="grey-text text-lighten-4" href="#">Terms</a>
+                </div>
+                  <div class="col s12 m3 l3">
+                    <a class="grey-text text-lighten-4" href="#">Privacy</a>
+                </div>
+                <div class="col s12 m3 l3">
+                    <a class="grey-text text-lighten-4" href="#">Career</a>
+                </div>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright ">
+            <div class="container copyright">
+            © 2018 Copyright
+            <a class="grey-text text-lighten-4 right" href="#!">Contact Us</a>
+            </div>
+          </div>
+        </footer>
+     <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+     <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
+     <script>
+           tippy('.lovebtn', {
+            arrow: true
+            }
+           )
+           tippy('.hahabtn', {
+            arrow: true
+            }
+           )
+           tippy('.downbtn', {
+            arrow: true
+            }
+           )
+     </script>
+</body>
+
+</html>

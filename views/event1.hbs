@@ -9,9 +9,8 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="/css/basic.min.css">
-    <link rel="stylesheet" href="/css/event.css">
-     <link rel="stylesheet" type="text/css" media="screen" href="/css/fblogin.css" />
-
+    <link rel="stylesheet" href="/css/dropzone.css">
+    <link rel="stylesheet" href="/css/event1.css">
     <title>Document</title>
 </head>
 
@@ -45,27 +44,26 @@
             </a>
             <ul class="right hide-on-med-and-down">
                 <li>
-                    <a href="/">Live Events</a>
+                    <a href="#">Live Events</a>
                 </li>
                 <li>
                     <a href="#">Winners</a>
                 </li>
                 <li>
-                    <a href="#"  title="Login to upload" class="waves-effect waves-light btn red sp darken-3">Upload</a>
+                    <a>Welcome {{name}}</a>
                 </li>
-                 <li class="fb">
-                    <a href="/auth/facebook">
-                        <button class="loginBtn loginBtn--facebook">
-                            Login with Facebook
-                        </button>
-                    </a>
+                <li>
+                    <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modal1">Upload</a>
+                </li>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light">Logout</a>
                 </li>
 
             </ul>
 
             <ul class="side-nav" id="mobile-demo">
                 <li>
-                    <a href="/">Live Events</a>
+                    <a href="#">Live Events</a>
                 </li>
                 <li>
                     <a href="#">Winners</a>
@@ -83,6 +81,54 @@
         </div>
     </nav>
 
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Upload a image</h4>
+
+
+            {{!--
+            <form method='post' action='upload' enctype="multipart/form-data">
+                <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
+
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="userPhoto">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+
+                <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form> --}}
+
+            <form method='post' action='/events/{{eventName}}/upload' enctype="multipart/form-data" class="dropzone" id="myAwesomeDropzone">
+                <!-- <input id="upload" type="file" class="btn btn-warning" name="userPhoto" /> -->
+                {{!--
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="userPhoto">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+
+                <button id="upload-form" class="btn waves-effect modal-close waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button> --}}
+
+            </form>
+
+
+
+        </div>
+    </div>
 
     <div class="row outer-row">
 
@@ -98,38 +144,38 @@
                     </a>
                 </div>
                 <div class="row inner-row">
-                     <div class="card-action">
-                        <a href="/events/{{this.event}}/imageId/{{this.imageId}}" class="waves-effect grey darken-4 waves-light btn share">id : {{this.imageId}}</a>
-                    </div>
-
                     <div class="card-action">
 
-
+                        
                         <div class="col s12 m12 l4 action action1">
-                            <a href="#" title="Login to love" class="like sp">
-                                <i class="material-icons fav">favorite</i>
+                            <a href="/{{this.imageId}}/love" class="like sp">
+                             <i class="material-icons fav">favorite</i>
                                 <span class="vote-number" id="{{this.imageId}}" class="like-text">{{this.love}}</span>
                             </a>
                         </div>
 
-
+                   
 
                         <div class="col s6 m6 l4 action action2">
-                            <a href="#" title="Login to laugh" class="haha sp">
-                                <i class="material-icons laugh">sentiment_very_satisfied</i>
+                            <a href="/{{this.imageId}}/laugh" class="haha sp">
+                             <i class="material-icons laugh">sentiment_very_satisfied</i>
                                 <span class="vote-number" id="{{this.imageId}}laugh" class="haha-text">{{this.laugh}}</span>
                             </a>
                         </div>
 
 
                         <div class="col s6 m6 l4 action">
-                            <a href="#" title="Login to downvote" class="downvote sp">
-                                <i class="material-icons down">trending_down</i>
+                            <a href="/{{this.imageId}}/sad" class="downvote sp">
+                            <i class="material-icons down">trending_down</i>
                                 <span class="vote-number" id="{{this.imageId}}sad" class="downvote-text">{{this.sad}}</span>
                             </a>
                         </div>
 
                     </div>
+                </div>
+
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn share">button</a>
                 </div>
 
             </div>
@@ -171,48 +217,28 @@
         </a>
         <ul>
             <li>
-                 <a class="btn-floating red" href="/events/{{eventName}}/leaderboard/1">
+                <a class="btn-floating red" href="/events/{{eventName}}/leaderboard/1">
                     <i class="material-icons">insert_chart</i>
                 </a>
             </li>
-         
             <li>
-                <a class="btn-floating green sp" title="Login to upload">
+                <a class="btn-floating yellow darken-1">
+                    <i class="material-icons">format_quote</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating green">
                     <i class="material-icons">publish</i>
                 </a>
             </li>
-           
+            <li>
+                <a class="btn-floating blue">
+                    <i class="material-icons">attach_file</i>
+                </a>
+            </li>
         </ul>
     </div>
 
-<footer class="page-footer grey darken-4">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <p class="grey-text text-lighten-4">
-                    <div class="col s12 m3 l3">
-                    <a class="grey-text text-lighten-4" href="#">About us</a>
-                </div>
-                 <div class="col s12 m3 l3">
-                    <a class="grey-text text-lighten-4" href="#">Terms</a>
-                </div>
-                  <div class="col s12 m3 l3">
-                    <a class="grey-text text-lighten-4" href="#">Privacy</a>
-                </div>
-                <div class="col s12 m3 l3">
-                    <a class="grey-text text-lighten-4" href="#">Career</a>
-                </div>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright ">
-            <div class="container copyright">
-            © 2018 Copyright
-            <a class="grey-text text-lighten-4 right" href="#!">Contact Us</a>
-            </div>
-          </div>
-        </footer>
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -221,16 +247,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/tippy.js@2.2.0/dist/tippy.all.min.js"></script>
+    <script src="/javascript/ajaxreq.js"></script>
+    <script src="/libs/dropzone.js"></script>
+    <script src="/javascript/drop.js"></script>
     <script>
         $(".button-collapse").sideNav();
 
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
     </script>
-    <script>
-        tippy('.sp', {
-            arrow: true,
-            arrowType: 'round'
-        })
-    </script>
+
+
 </body>
 
 </html>
