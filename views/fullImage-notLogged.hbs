@@ -191,6 +191,11 @@
             }
            )
      </script>
+      <script>
+        if (!!window.performance && window.performance.navigation.type == 2) {
+            window.location.reload();
+        }
+    </script>
 </body>
 
 </html>

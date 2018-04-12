@@ -52,7 +52,7 @@
             </a>
             <ul class="right hide-on-med-and-down">
                 <li>
-                    <a href="#">Live Events</a>
+                    <a href="/">Live Events</a>
                 </li>
                 <li>
                     <a href="#">Winners</a>
@@ -69,7 +69,7 @@
 
             <ul class="side-nav" id="mobile-demo">
                 <li>
-                    <a href="#">Live Events</a>
+                    <a href="/">Live Events</a>
                 </li>
                 <li>
                     <a href="#">Winners</a>
@@ -172,6 +172,11 @@
         $(".button-collapse").sideNav();
 
         
+    </script>
+     <script>
+        if (!!window.performance && window.performance.navigation.type == 2) {
+            window.location.reload();
+        }
     </script>
 </body>
 

@@ -48,3 +48,6 @@ body {
   footer{
     border-top: 5px solid rgb(50, 182, 38); 
   }
+  .copyright{
+    padding-left:10px; 
+  }

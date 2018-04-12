@@ -622,7 +622,7 @@ app.get('/events/:event/:page', (req, res) => {
     var event = req.params.event;
     var number_of_pages = 1;
     req.session.returnTo = req.path;
-
+if(event === "kiitDarpan"){
     likeImformation.count({
         "event": event
     }, function (err, count) {
@@ -670,6 +670,10 @@ app.get('/events/:event/:page', (req, res) => {
             }
         }
     })
+}
+else{
+    res.send("Not an event");
+}
 
 })
 
@@ -731,12 +735,22 @@ app.get('/events/:event/leaderboard/:page', (req, res) => {
 
 app.get('/events/:event/imageId/:id', (req, res) => {
     var id = req.params.id;
+    var event = req.params.event;
     req.session.returnTo = req.path;
+
+    if(event === "kiitDarpan"){
 
     if (req.user === undefined) {
         likeImformation.findOne({
             "imageId": id
         }, function (err, data) {
+            if(err){
+                res.send("Image not found");
+            }
+            else if(data===null){
+                res.send("Image not found");
+            }
+            else{
             var d = data._id.getTimestamp();
             res.render('fullImage-notLogged.hbs', {
                 fullPreview: id,
@@ -749,11 +763,19 @@ app.get('/events/:event/imageId/:id', (req, res) => {
                 fullUrl:req.path
 
             });
+        }
         })
     } else {
         likeImformation.findOne({
             "imageId": id
         }, function (err, data) {
+            if(err){
+                res.send("Image not found");
+            }
+            else if(data===null){
+                res.send("Image not found");
+            }
+            else{
             var d = data._id.getTimestamp();
             res.render('fullImage.hbs', {
                 name: req.user.displayName,
@@ -768,9 +790,15 @@ app.get('/events/:event/imageId/:id', (req, res) => {
 
 
             });
+        }
         })
 
     }
+}
+else{
+    res.send("Not a valid event");
+}
+
 })
 
 

@@ -97,3 +97,11 @@ ul#example li p {
 .decorated > span:after{
    left: 100%;
 }
+
+.copyright{
+    padding-left:10px; 
+  }
+  
+  footer{
+    border-top: 5px solid rgb(50, 182, 38); 
+  }
