@@ -32,7 +32,11 @@ upload = multer({
           
         },
         key: function (req, file, cb) {
-          cb(null, Date.now().toString())
+            var  rand = Math.random().toString(36).substr(2, 12);
+                    req.rand =  rand;
+                    ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
+                    req.ext = ext;
+          cb(null,  rand+'.jpg')
         }
       })
     }
