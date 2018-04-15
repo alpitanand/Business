@@ -25,7 +25,7 @@ var multerS3 = require('multer-s3'),
 upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: 'bigfilepic',
+        bucket: 'bigfilepic/Big',
         metadata: function (req, file, cb) {
           console.log("ALpit");
             cb(null, {fieldName: file.fieldname});
