@@ -7,10 +7,7 @@ Dropzone.options.myAwesomeDropzone = {
     init: function () {
         // Set up any event handlers
         console.log("Alpit");
-        this.on("complete", function (file) {
-            
-          
-                
+        this.on("complete", function (file) { 
                 if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                     
                     setTimeout(function() {
