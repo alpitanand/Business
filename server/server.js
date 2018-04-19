@@ -111,10 +111,16 @@ app.get('/auth/facebook/callback',
     });
 
 app.get('/loggedIn', (req, res) => {
+if(req.user === undefined){
+    res.redirect('/');
+}
+else{
     res.render('landingPage-logged.hbs', {
         name: req.user.displayName
     });
+}
 })
+
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
@@ -622,6 +628,7 @@ app.get('/events/:event/:page', (req, res) => {
     var event = req.params.event;
     var number_of_pages = 1;
     req.session.returnTo = req.path;
+
 if(event === "kiitDarpan"){
     likeImformation.count({
         "event": event
@@ -802,6 +809,8 @@ else{
 })
 
 
+
+
 app.post('/events/:event/upload', upload, function (req, res) {
 
     var fb_id = req.user.id;
@@ -895,6 +904,20 @@ app.post('/events/:event/upload', upload, function (req, res) {
     res.status(200);
     res.end('File have been uploded')
 });
+
+app.get("/aboutus", function(req, res){
+    res.sendFile(path.join(__dirname, '..', 'views/aboutus.html'))
+})
+app.get("/terms", function(req, res){
+    res.sendFile(path.join(__dirname, '..', 'views/terms.html'))
+})
+app.get("/privacy", function(req, res){
+    res.sendFile(path.join(__dirname, '..', 'views/privacy.html'))
+})
+app.get("/career", function(req, res){
+    res.sendFile(path.join(__dirname, '..', 'views/career.html'))
+})
+
 
 
 //Listining

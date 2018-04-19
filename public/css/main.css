@@ -1,7 +1,6 @@
 .navbar {
     background-color: #2C3A47;
     -webkit-box-shadow: 0 8px 6px -6px #999;
-    -moz-box-shadow: 0 8px 6px -6px #999;
     box-shadow: 0 8px 6px -6px rgb(80, 78, 78);
 }
 
@@ -41,7 +40,8 @@
 
 .card {
     width: 18rem;
-    box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
+    -webkit-box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
+            box-shadow: 0 8px 6px -6px rgb(95, 95, 95);
     border-radius: 12px;
     margin: 0 auto;
     height: 27rem;
@@ -96,8 +96,14 @@ font-size: 1.2rem;
 margin:0 1rem;
 }
 .vertical-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     
   }

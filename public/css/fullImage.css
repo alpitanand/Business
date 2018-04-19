@@ -30,21 +30,32 @@
 .fix {
   padding: 10px 0px !important;
   border-bottom: 1px solid rgb(230, 229, 229);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   font-weight: 300;
 }
 
 .totalScore {
   padding: 15px 0px !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .buttton-design {
   padding: 10px 0px !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
  
 }
 .buttton-design a{
@@ -103,8 +114,12 @@ footer{
   }
   .buttton-design {
     padding: 10px 0px !important;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-evenly;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
     border-bottom: 1px solid rgb(216, 216, 216);
   }
   .downvote a {

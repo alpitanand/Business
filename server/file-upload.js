@@ -1,8 +1,8 @@
 var multer = require('multer');
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('s3_config.json');
-var s3 = new AWS.S3();
-var multerS3 = require('multer-s3'),
+// AWS.config.loadFromPath('s3_config.json');
+// var s3 = new AWS.S3();
+// var multerS3 = require('multer-s3'),
 
 storage = multer.diskStorage({
     destination: function (req, file, callback) {
