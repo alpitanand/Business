@@ -7,7 +7,7 @@ var AWS = require('aws-sdk');
 storage = multer.diskStorage({
     destination: function (req, file, callback) {
 
-        callback(null, './uploads/big');
+        callback(null, './uploads/Big');
     },
     filename: function (req, file, callback) {
         var  rand = Math.random().toString(36).substr(2, 12);
