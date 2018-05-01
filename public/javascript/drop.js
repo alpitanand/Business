@@ -2,6 +2,7 @@ Dropzone.options.myAwesomeDropzone = {
     paramName: "userPhoto", // The name that will be used to transfer the file
     maxFilesize: 20, // MB
     maxFiles: 1,
+    timeout: 1800000,
     acceptedFiles: ".jpeg,.jpg",
     dictDefaultMessage: 'Drag an image here to upload, or click to select one',
     init: function () {

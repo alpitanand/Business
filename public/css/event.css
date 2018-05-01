@@ -80,3 +80,6 @@ body {
 footer{
   border-top: 5px solid rgb(50, 182, 38); 
 }
+.page{
+  min-height: 70vh;
+}

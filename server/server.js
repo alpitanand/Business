@@ -917,6 +917,9 @@ app.get("/privacy", function(req, res){
 app.get("/career", function(req, res){
     res.sendFile(path.join(__dirname, '..', 'views/career.html'))
 })
+app.get("/contact", function(req, res){
+    res.sendFile(path.join(__dirname, '..', 'views/contact.html'))
+})
 
 
 
